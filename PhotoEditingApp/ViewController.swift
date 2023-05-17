@@ -1,8 +1,11 @@
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
+
+    private(set) var photoEditingView: UIView
 
     override func viewDidLoad() {
+        self.view = photoEditingView
         super.viewDidLoad()
     }
 
@@ -10,7 +13,8 @@ class ViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init() {
+    init(view: UIView) {
+        self.photoEditingView = view
         super.init(nibName: nil, bundle: nil)
     }
 

@@ -7,8 +7,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         window = UIWindow()
         window?.windowScene = scene as? UIWindowScene
-        window?.rootViewController = ViewController()
+        window?.rootViewController = ViewController(view: PhotoEditingView())
         window?.makeKeyAndVisible()
     }
 }
-
