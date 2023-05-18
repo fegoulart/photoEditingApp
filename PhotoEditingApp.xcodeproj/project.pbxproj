@@ -16,6 +16,10 @@
 		6C335B122A154701007B2AB0 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C335B102A154701007B2AB0 /* UIView+Extensions.swift */; };
 		6C335B132A154701007B2AB0 /* ViewCodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C335B112A154701007B2AB0 /* ViewCodeProtocol.swift */; };
 		6C335B162A154DC8007B2AB0 /* PhotoEditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C335B152A154DC8007B2AB0 /* PhotoEditingView.swift */; };
+		6C335B1A2A156F54007B2AB0 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C335B192A156F54007B2AB0 /* ImagePicker.swift */; };
+		6C335B1C2A157016007B2AB0 /* PhotoEditingImagerPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C335B1B2A157016007B2AB0 /* PhotoEditingImagerPicker.swift */; };
+		6C335B212A16CED9007B2AB0 /* ImagePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C335B202A16CED9007B2AB0 /* ImagePickerDelegate.swift */; };
+		6C335B232A16D3C6007B2AB0 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C335B222A16D3C6007B2AB0 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +45,10 @@
 		6C335B102A154701007B2AB0 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		6C335B112A154701007B2AB0 /* ViewCodeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewCodeProtocol.swift; sourceTree = "<group>"; };
 		6C335B152A154DC8007B2AB0 /* PhotoEditingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingView.swift; sourceTree = "<group>"; };
+		6C335B192A156F54007B2AB0 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		6C335B1B2A157016007B2AB0 /* PhotoEditingImagerPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingImagerPicker.swift; sourceTree = "<group>"; };
+		6C335B202A16CED9007B2AB0 /* ImagePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerDelegate.swift; sourceTree = "<group>"; };
+		6C335B222A16D3C6007B2AB0 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,10 +90,10 @@
 		6C10E1A02A1525B700A6E090 /* PhotoEditingApp */ = {
 			isa = PBXGroup;
 			children = (
+				6C335B242A16E3C6007B2AB0 /* ViewModel */,
 				6C335B172A15533C007B2AB0 /* View */,
 				6C10E1A12A1525B700A6E090 /* AppDelegate.swift */,
 				6C10E1A32A1525B700A6E090 /* SceneDelegate.swift */,
-				6C10E1A52A1525B700A6E090 /* ViewController.swift */,
 				6C10E1AA2A1525B800A6E090 /* Assets.xcassets */,
 				6C10E1AC2A1525B800A6E090 /* LaunchScreen.storyboard */,
 				6C10E1AF2A1525B800A6E090 /* Info.plist */,
@@ -113,10 +121,30 @@
 		6C335B172A15533C007B2AB0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6C10E1A52A1525B700A6E090 /* ViewController.swift */,
+				6C335B182A156F3A007B2AB0 /* ImagePicker */,
 				6C335B152A154DC8007B2AB0 /* PhotoEditingView.swift */,
 				6C335B0F2A154701007B2AB0 /* ViewHelper */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		6C335B182A156F3A007B2AB0 /* ImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				6C335B192A156F54007B2AB0 /* ImagePicker.swift */,
+				6C335B1B2A157016007B2AB0 /* PhotoEditingImagerPicker.swift */,
+				6C335B202A16CED9007B2AB0 /* ImagePickerDelegate.swift */,
+			);
+			path = ImagePicker;
+			sourceTree = "<group>";
+		};
+		6C335B242A16E3C6007B2AB0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6C335B222A16D3C6007B2AB0 /* ViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,9 +247,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C335B232A16D3C6007B2AB0 /* ViewModel.swift in Sources */,
 				6C10E1A62A1525B700A6E090 /* ViewController.swift in Sources */,
 				6C10E1A22A1525B700A6E090 /* AppDelegate.swift in Sources */,
+				6C335B1C2A157016007B2AB0 /* PhotoEditingImagerPicker.swift in Sources */,
+				6C335B212A16CED9007B2AB0 /* ImagePickerDelegate.swift in Sources */,
 				6C335B162A154DC8007B2AB0 /* PhotoEditingView.swift in Sources */,
+				6C335B1A2A156F54007B2AB0 /* ImagePicker.swift in Sources */,
 				6C335B132A154701007B2AB0 /* ViewCodeProtocol.swift in Sources */,
 				6C335B122A154701007B2AB0 /* UIView+Extensions.swift in Sources */,
 				6C10E1A42A1525B700A6E090 /* SceneDelegate.swift in Sources */,
@@ -379,7 +411,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
+				DEVELOPMENT_TEAM = L7JGQMYBFY;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PhotoEditingApp/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses camera to take photos";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This apps uses the photo library";
@@ -411,7 +444,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
+				DEVELOPMENT_TEAM = L7JGQMYBFY;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PhotoEditingApp/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses camera to take photos";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This apps uses the photo library";
