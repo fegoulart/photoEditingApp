@@ -1,9 +1,4 @@
-//
-//  ImagePicker.swift
-//  PhotoEditingApp
-//
-//  Copyright © 2023 Alelo. All rights reserved.
-//
-
-
-import Foundation
+protocol ImagePicker {
+    var delegate: ImagePickerDelegate? { get }
+    func present()
+}
