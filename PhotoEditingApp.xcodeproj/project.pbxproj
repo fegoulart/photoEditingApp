@@ -23,6 +23,7 @@
 		6CCC75622A1808AF0002CAF7 /* PhotoEditingView+ViewCodeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75612A1808AF0002CAF7 /* PhotoEditingView+ViewCodeProtocol.swift */; };
 		6CCC75642A1808E50002CAF7 /* UIResponder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75632A1808E50002CAF7 /* UIResponder+Extensions.swift */; };
 		6CCC75662A18094A0002CAF7 /* PhotoEditingView+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75652A18094A0002CAF7 /* PhotoEditingView+Helper.swift */; };
+		6CCC75692A180F1C0002CAF7 /* PhotoEditingView+Adjusts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75682A180F1C0002CAF7 /* PhotoEditingView+Adjusts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		6CCC75612A1808AF0002CAF7 /* PhotoEditingView+ViewCodeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoEditingView+ViewCodeProtocol.swift"; sourceTree = "<group>"; };
 		6CCC75632A1808E50002CAF7 /* UIResponder+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Extensions.swift"; sourceTree = "<group>"; };
 		6CCC75652A18094A0002CAF7 /* PhotoEditingView+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoEditingView+Helper.swift"; sourceTree = "<group>"; };
+		6CCC75682A180F1C0002CAF7 /* PhotoEditingView+Adjusts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoEditingView+Adjusts.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				6C335B152A154DC8007B2AB0 /* PhotoEditingView.swift */,
 				6CCC75612A1808AF0002CAF7 /* PhotoEditingView+ViewCodeProtocol.swift */,
 				6CCC75652A18094A0002CAF7 /* PhotoEditingView+Helper.swift */,
+				6CCC75682A180F1C0002CAF7 /* PhotoEditingView+Adjusts.swift */,
 			);
 			path = PhotoEditingView;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				6CCC75642A1808E50002CAF7 /* UIResponder+Extensions.swift in Sources */,
 				6C10E1A42A1525B700A6E090 /* SceneDelegate.swift in Sources */,
 				6CCC75662A18094A0002CAF7 /* PhotoEditingView+Helper.swift in Sources */,
+				6CCC75692A180F1C0002CAF7 /* PhotoEditingView+Adjusts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

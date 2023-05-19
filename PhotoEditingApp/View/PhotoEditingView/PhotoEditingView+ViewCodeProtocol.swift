@@ -7,6 +7,7 @@ extension PhotoEditingView: ViewCodeProtocol {
         addSubview(startButton)
         addSubview(photoImageView)
         addSubview(deleteButton)
+        addSubview(adjustsStackView)
     }
 
     func setupConstraints() {
@@ -15,7 +16,7 @@ extension PhotoEditingView: ViewCodeProtocol {
             [
                 view.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: defaultMargin),
                 view.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -1 * defaultMargin),
-                view.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -1 * defaultMargin),
+                view.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -2 * defaultMargin),
                 view.heightAnchor.constraint(equalToConstant: segmentHeight),
             ]
         }
@@ -40,6 +41,15 @@ extension PhotoEditingView: ViewCodeProtocol {
             ]
         }
 
+        adjustsStackView.constraint { view in
+            [
+                view.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
+                view.heightAnchor.constraint(equalToConstant: defaultButtonSize.y),
+                view.widthAnchor.constraint(equalToConstant: (screenWidth ?? iphoneSE22Width) - 6 * defaultMargin),
+                view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -1 * defaultMargin)
+            ]
+        }
+
     }
 
     func setImageConstraints(_ newHeight: CGFloat) {
@@ -60,3 +70,17 @@ extension PhotoEditingView: ViewCodeProtocol {
         self.backgroundColor = .white
     }
 }
+
+#if DEBUG
+import SwiftUI
+
+struct PhotoEditingView_Preview: PreviewProvider {
+    static var previews: some View {
+        PhotoEditingView(startAction: { }, deleteAction: {} ).showPreview().previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max")).previewDisplayName("iPhone 14 Pro Max")
+
+
+        PhotoEditingView(startAction: { }, deleteAction: {} ).showPreview().previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)")).previewDisplayName("iPhone SE (3rd generation)")
+
+    }
+}
+#endif

@@ -9,6 +9,7 @@ final class PhotoEditingView: UIView {
     var defaultMargin: CGFloat { 20 }
     var largeButtonSize: CGPoint { CGPoint(x: 100, y: 100) }
     var defaultButtonSize: CGPoint { CGPoint(x: 44, y: 44) }
+    var iphoneSE22Width: CGFloat { 375 }
 
     var margins: UILayoutGuide {
         self.layoutMarginsGuide
@@ -28,7 +29,13 @@ final class PhotoEditingView: UIView {
     private(set) var deleteAction: ButtonHandler?
 
     lazy var segmentControl: UISegmentedControl = {
-        UISegmentedControl(items: ["Filters", "Adjusts"])
+        let filtersAction = UIAction(title: "Filters") { action in
+
+        }
+        let adjustsAction = UIAction(title: "Adjusts") { action in
+            self.showAdjusts()
+        }
+        return UISegmentedControl(frame: CGRect.zero, actions: [filtersAction, adjustsAction])
     }()
 
     lazy var startButton: UIButton = {
@@ -61,6 +68,54 @@ final class PhotoEditingView: UIView {
         })
         button.isHidden = true
         return button
+    }()
+
+    lazy var brightnessIcon: UIImage = {
+        UIImage(named: "brightness")!
+    }()
+
+    lazy var brightnessButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: defaultButtonSize.x, height: defaultButtonSize.y)
+        button.setBackgroundImage(brightnessIcon, for: .normal)
+        button.layoutIfNeeded()
+        button.subviews.first?.contentMode = .scaleAspectFit
+        return button
+    }()
+
+    lazy var opacityIcon: UIImage = {
+        UIImage(named: "opacity")!
+    }()
+
+    lazy var opacityButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: defaultButtonSize.x, height: defaultButtonSize.y)
+        button.setBackgroundImage(opacityIcon, for: .normal)
+        button.layoutIfNeeded()
+        button.subviews.first?.contentMode = .scaleAspectFit
+        return button
+    }()
+
+    lazy var contrastIcon: UIImage = {
+        UIImage(named: "contrast")!
+    }()
+
+    lazy var contrastButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: defaultButtonSize.x, height: defaultButtonSize.y)
+        button.setBackgroundImage(contrastIcon, for: .normal)
+        button.layoutIfNeeded()
+        button.subviews.first?.contentMode = .scaleAspectFit
+        return button
+    }()
+
+    lazy var adjustsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [brightnessButton, opacityButton, contrastButton])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.isHidden = true
+        return stackView
     }()
 
     init(startAction: @escaping ButtonHandler, deleteAction: @escaping ButtonHandler) {
