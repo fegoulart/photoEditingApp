@@ -54,6 +54,27 @@ extension ViewController: ImagePickerDelegate {
         guard let pngData = image.pngData() else { return }
         DispatchQueue.global().async {
             self.viewModel.cacheImage(pngData)
+
+// MARK: - States
+
+extension ViewController {
+    func setEmptyState() {
+        DispatchQueue.main.async {
+            self.photoEditingView.setPhoto(nil)
+            self.photoEditingView.photoImageView.isHidden = true
+            self.photoEditingView.startButton.isHidden = false
+            self.photoEditingView.segmentControl.isHidden = true
+            self.photoEditingView.deleteButton.isHidden = true
+        }
+    }
+
+    func setEditingState(with image: UIImage) {
+        DispatchQueue.main.async {
+            self.photoEditingView.photoImageView.isHidden = false
+            self.photoEditingView.startButton.isHidden = true
+            self.photoEditingView.segmentControl.isHidden = false
+            self.photoEditingView.deleteButton.isHidden = false
+            self.photoEditingView.setPhoto(image)
         }
     }
 }
