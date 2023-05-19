@@ -11,11 +11,17 @@ final class ViewModel {
     }
 
     func cacheImage(_ image: Data) {
-        try? cacheImageService.cache(image)
+        DispatchQueue.global().async {
+            try? self.cacheImageService.cache(image)
+        }
     }
 
     func retrieveImage() {
-        imageData = cacheImageService.retrieve()
+        DispatchQueue.global().async {
+            self.imageData = self.cacheImageService.retrieve()
+        }
+    }
+
     }
 }
 

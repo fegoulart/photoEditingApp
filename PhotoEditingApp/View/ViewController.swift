@@ -11,9 +11,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         self.view = photoEditingView
         super.viewDidLoad()
-        DispatchQueue.global().async {
-            self.viewModel.retrieveImage()
-        }
+        self.viewModel.retrieveImage()
     }
 
     required init?(coder: NSCoder) {
@@ -34,14 +32,10 @@ final class ViewController: UIViewController {
 
     private func subscribeToImage() {
         cancellable = viewModel.$imageData.sink { imageData in
-            guard let imageData: Data = imageData else { self.photoEditingView.photoImageView.image = nil ; return }
+            guard let imageData: Data = imageData else { self.setEmptyState(); return }
             assert(!Thread.isMainThread)
-            DispatchQueue.global().async {
-                if let image = UIImage(data: imageData) {
-                    DispatchQueue.main.async {
-                        self.photoEditingView.photoImageView.image = image
-                    }
-                }
+            if let image = UIImage(data: imageData){
+                self.setEditingState(with: image)
             }
         }
     }
@@ -50,10 +44,11 @@ final class ViewController: UIViewController {
 extension ViewController: ImagePickerDelegate {
     func didSelect<UIImage>(_ image: UIImage?) {
         guard let image: UIKit.UIImage = image as? UIKit.UIImage else { return }
-        photoEditingView.photoImageView.image = image
+        setEditingState(with: image)
         guard let pngData = image.pngData() else { return }
-        DispatchQueue.global().async {
-            self.viewModel.cacheImage(pngData)
+        self.viewModel.cacheImage(pngData)
+    }
+}
 
 // MARK: - States
 
