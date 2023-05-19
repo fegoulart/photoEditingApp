@@ -7,13 +7,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         let imagePicker = PhotoEditingImagePicker(pickerController: UIImagePickerController())
-        let startAction = UIAction { (action) in
-            imagePicker.present()
+        let startAction: PhotoEditingView.ButtonHandler = { [weak imagePicker] in
+            imagePicker?.present()
         }
-        let photoEditingView = PhotoEditingView(startAction: startAction)
+
+        let viewModel = ViewModel(cacheImageService: FileCacheImageService())
+        let deleteAction: PhotoEditingView.ButtonHandler = { [weak viewModel] in
+            viewModel?.clear()
+        }
+        let photoEditingView = PhotoEditingView(startAction: startAction, deleteAction: deleteAction)
 
         photoEditingView.startAction = startAction
-        let viewModel = ViewModel(cacheImageService: FileCacheImageService())
         let viewController = ViewController(view: photoEditingView, imagePicker: imagePicker, viewModel: viewModel)
         imagePicker.delegate = viewController
         let navigationController = UINavigationController(rootViewController: viewController)
