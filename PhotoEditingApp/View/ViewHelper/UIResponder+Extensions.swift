@@ -1,9 +1,14 @@
-//
-//  UIResponder+Extensions.swift
-//  PhotoEditingApp
-//
-//  Copyright © 2023 Alelo. All rights reserved.
-//
+import UIKit
 
-
-import Foundation
+extension UIResponder {
+    func getParentViewController() -> UIViewController? {
+        if self.next is UIViewController {
+            return self.next as? UIViewController
+        } else {
+            if self.next != nil {
+                return (self.next!).getParentViewController()
+            }
+            else {return nil}
+        }
+    }
+}
