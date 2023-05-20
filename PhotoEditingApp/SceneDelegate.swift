@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let photoEditingView = PhotoEditingView(startAction: startAction, deleteAction: deleteAction)
 
         photoEditingView.startAction = startAction
-        let viewController = ViewController(view: photoEditingView, imagePicker: imagePicker, viewModel: viewModel)
+        let viewController = ViewController(view: photoEditingView, imagePicker: imagePicker, viewModel: viewModel, stateChangeManager: ViewStateChangeManager())
         imagePicker.delegate = viewController
         let navigationController = UINavigationController(rootViewController: viewController)
         imagePicker.presentationController = viewController

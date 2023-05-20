@@ -7,6 +7,7 @@ final class ViewController: UIViewController {
     let photoEditingView: PhotoEditingView
     let viewModel: ViewModel
     var cancellable: AnyCancellable?
+    let stateChangeManager: StateChangeManager
 
     override func viewDidLoad() {
         self.view = photoEditingView
@@ -21,11 +22,13 @@ final class ViewController: UIViewController {
     init(
         view: PhotoEditingView,
         imagePicker: ImagePicker,
-        viewModel: ViewModel
+        viewModel: ViewModel,
+        stateChangeManager: StateChangeManager
     ) {
         self.imagePicker = imagePicker
         self.photoEditingView = view
         self.viewModel = viewModel
+        self.stateChangeManager = stateChangeManager
         super.init(nibName: nil, bundle: nil)
         subscribeToImage()
     }
@@ -54,24 +57,35 @@ extension ViewController: ImagePickerDelegate {
 
 extension ViewController {
     func setEmptyState() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 1.0) {
+        stateChangeManager.setNewState { [weak self] in
+            guard let self = self else { return }
+            assert(Thread.isMainThread)
+            self.photoEditingView.photoImageView.fadeOut()
+            self.photoEditingView.startButton.fadeIn()
+            self.photoEditingView.segmentControl.fadeOut()
+            self.photoEditingView.adjustsStackView.fadeOut()
+            self.photoEditingView.deleteButton.fadeOut {
                 self.photoEditingView.setPhoto(nil)
-                self.photoEditingView.photoImageView.isHidden = true
-                self.photoEditingView.startButton.isHidden = false
-                self.photoEditingView.segmentControl.isHidden = true
-                self.photoEditingView.deleteButton.isHidden = true
+                self.stateChangeManager.signal()
             }
         }
     }
 
     func setEditingState(with image: UIImage) {
-        DispatchQueue.main.async {
-            self.photoEditingView.photoImageView.isHidden = false
-            self.photoEditingView.startButton.isHidden = true
-            self.photoEditingView.segmentControl.isHidden = false
-            self.photoEditingView.deleteButton.isHidden = false
-            self.photoEditingView.setPhoto(image)
+        stateChangeManager.setNewState { [weak self] in
+            guard let self = self else { return }
+            assert(Thread.isMainThread)
+            self.photoEditingView.photoImageView.fadeIn()
+            self.photoEditingView.startButton.fadeOut()
+            self.photoEditingView.segmentControl.fadeIn()
+            self.photoEditingView.deleteButton.fadeIn {
+                self.photoEditingView.setPhoto(image)
+                self.stateChangeManager.signal()
+            }
         }
     }
 }
+
+
+
+
