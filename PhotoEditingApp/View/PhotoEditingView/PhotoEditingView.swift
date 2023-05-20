@@ -83,14 +83,14 @@ final class PhotoEditingView: UIView {
         return button
     }()
 
-    lazy var opacityIcon: UIImage = {
-        UIImage(named: "opacity")!
+    lazy var saturationIcon: UIImage = {
+        UIImage(named: "saturation")!
     }()
 
-    lazy var opacityButton: UIButton = {
+    lazy var saturationButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: defaultButtonSize.x, height: defaultButtonSize.y)
-        button.setBackgroundImage(opacityIcon, for: .normal)
+        button.setBackgroundImage(saturationIcon, for: .normal)
         button.layoutIfNeeded()
         button.subviews.first?.contentMode = .scaleAspectFit
         return button
@@ -110,7 +110,7 @@ final class PhotoEditingView: UIView {
     }()
 
     lazy var adjustsStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [brightnessButton, opacityButton, contrastButton])
+        let stackView = UIStackView(arrangedSubviews: [brightnessButton, saturationButton, contrastButton])
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fillEqually
