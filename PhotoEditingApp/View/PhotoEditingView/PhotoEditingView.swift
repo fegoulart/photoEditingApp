@@ -30,7 +30,7 @@ final class PhotoEditingView: UIView {
 
     lazy var segmentControl: UISegmentedControl = {
         let filtersAction = UIAction(title: "Filters") { action in
-
+            self.showFilters()
         }
         let adjustsAction = UIAction(title: "Adjusts") { action in
             self.showAdjusts()
