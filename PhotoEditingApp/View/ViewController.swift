@@ -55,11 +55,13 @@ extension ViewController: ImagePickerDelegate {
 extension ViewController {
     func setEmptyState() {
         DispatchQueue.main.async {
-            self.photoEditingView.setPhoto(nil)
-            self.photoEditingView.photoImageView.isHidden = true
-            self.photoEditingView.startButton.isHidden = false
-            self.photoEditingView.segmentControl.isHidden = true
-            self.photoEditingView.deleteButton.isHidden = true
+            UIView.animate(withDuration: 1.0) {
+                self.photoEditingView.setPhoto(nil)
+                self.photoEditingView.photoImageView.isHidden = true
+                self.photoEditingView.startButton.isHidden = false
+                self.photoEditingView.segmentControl.isHidden = true
+                self.photoEditingView.deleteButton.isHidden = true
+            }
         }
     }
 

@@ -53,7 +53,7 @@ final class PhotoEditingView: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.isHidden = true
-        imageView.backgroundColor = .red
+        imageView.backgroundColor = .clear
         return imageView
     }()
 

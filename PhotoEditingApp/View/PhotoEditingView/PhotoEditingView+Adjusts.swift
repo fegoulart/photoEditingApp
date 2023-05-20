@@ -2,6 +2,8 @@ import UIKit
 
 extension PhotoEditingView {
     func showAdjusts() {
-        adjustsStackView.isHidden = false
+        UIView.animate(withDuration: 1.0) {
+            self.adjustsStackView.isHidden = false
+        }
     }
 }
