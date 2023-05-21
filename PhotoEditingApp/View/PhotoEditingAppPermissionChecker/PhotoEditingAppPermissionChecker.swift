@@ -16,25 +16,22 @@ struct PhotoEditingAppPermissionChecker: PermissionChecker {
             }
             completion(true)
         case .photoLibrary:
-            let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+            let status: PHAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
             guard status != .restricted, status != .denied else {
                 completion(false)
                 break
             }
             guard status == .authorized else {
-                PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
-                    if status == .authorized {
-                        completion(true)
-                    } else {
-                        completion(false)
+                    PHPhotoLibrary.requestAuthorization() { status in
+                        if status == .authorized {
+                            completion(true)
+                        } else {
+                            completion(false)
+                        }
                     }
-                }
                 break
             }
             completion(true)
         }
     }
 }
-
-
-

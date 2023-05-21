@@ -39,26 +39,32 @@ final class PhotoEditingView: UIView {
     private(set) var deleteAction: ButtonHandler?
 
     lazy var segmentControl: UISegmentedControl = {
-        let filtersAction = UIAction(title: "Filters") { action in
+        let segment = UISegmentedControl()
+        segment.insertSegment(withTitle: "Filters", at: 0, animated: true)
+        segment.insertSegment(withTitle: "Adjusts", at: 1, animated: true)
+        segment.addTarget(self, action: #selector(segmentTarget), for: .valueChanged)
+        return segment
+    }()
+
+    @objc func segmentTarget(_ sender: UISegmentedControl) {
+        assert(sender === segmentControl, "Only segmentControl should call this method")
+        if sender.selectedSegmentIndex == 0 {
             self.showFilters()
-        }
-        let adjustsAction = UIAction(title: "Adjusts") { action in
+        } else {
             self.showAdjusts()
         }
-        return UISegmentedControl(frame: CGRect.zero, actions: [filtersAction, adjustsAction])
-    }()
+    }
 
     lazy var startButton: UIButton = {
         let image = UIImage(systemName: "plus.circle", withConfiguration:  UIImage.SymbolConfiguration(pointSize: self.largeButtonSize.y))
-        var configuration = UIButton.Configuration.borderless()
-        configuration.image = image
-        configuration.imagePlacement = .all
-        assert(startAction != nil, "StartAction should not be nil")
-        let button = UIButton(configuration: configuration, primaryAction: UIAction { _ in
-            self.startAction?()
-        })
+        let button = UIButton()
+        button.setBackgroundImage(image, for: .normal)
+        button.layoutIfNeeded()
+        button.subviews.first?.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(mainButtonsTarget), for: .touchUpInside)
         button.isHidden = true
         return button
+
     }()
 
     lazy var photoImageView: MetalView = {
@@ -71,13 +77,11 @@ final class PhotoEditingView: UIView {
 
     lazy var deleteButton: UIButton = {
         let image = UIImage(systemName: "trash.circle", withConfiguration:  UIImage.SymbolConfiguration(pointSize: self.defaultButtonSize.y))
-        var configuration = UIButton.Configuration.borderedTinted()
-        configuration.image = image
-        configuration.imagePlacement = .all
-        assert(deleteAction != nil, "DeleteAction should not be nil")
-        let button = UIButton(configuration: configuration, primaryAction: UIAction { _ in
-            self.deleteAction?()
-        })
+        let button = UIButton()
+        button.setBackgroundImage(image, for: .normal)
+        button.layoutIfNeeded()
+        button.subviews.first?.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(mainButtonsTarget), for: .touchUpInside)
         button.isHidden = true
         return button
     }()
