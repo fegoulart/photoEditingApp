@@ -71,6 +71,7 @@ extension PhotoEditingView {
     }
 
     @objc func sliderValueDidChange(_ sender: UISlider) {
+        if saveButton.isHidden { saveButton.fadeIn() }
         switch sender {
         case brightnessSlider:
             guard let originalFilter = originalFilter else {

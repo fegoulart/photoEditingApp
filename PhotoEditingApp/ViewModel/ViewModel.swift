@@ -3,6 +3,7 @@ import Foundation
 final class ViewModel {
 
     @Published private(set) var imageData: Data?
+    @Published private(set) var operationResult: String = ""
 
     let cacheImageService: CacheImageService
 

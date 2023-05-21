@@ -7,6 +7,7 @@ final class ViewController: UIViewController {
     let photoEditingView: PhotoEditingView
     let viewModel: ViewModel
     var cancellable: AnyCancellable?
+    var messageCancellable: AnyCancellable?
     let stateChangeManager: StateChangeManager
 
     override func viewDidLoad() {
@@ -31,6 +32,7 @@ final class ViewController: UIViewController {
         self.stateChangeManager = stateChangeManager
         super.init(nibName: nil, bundle: nil)
         subscribeToImage()
+        subscribeToOperationResult()
     }
 
     private func subscribeToImage() {
@@ -41,6 +43,16 @@ final class ViewController: UIViewController {
             if let image = UIImage(data: imageData){
                 self.setEditingState(with: image)
             }
+        }
+    }
+
+    private func subscribeToOperationResult() {
+        messageCancellable = viewModel.$operationResult.dropFirst().sink { resultString in
+            guard !resultString.isEmpty else { return }
+            let alertController = UIAlertController(title: "Operation status", message: resultString, preferredStyle: .alert)
+            let actionOk = UIAlertAction(title: "Ok", style: .default) { _ in }
+            alertController.addAction(actionOk)
+            self.present(alertController, animated: true)
         }
     }
 

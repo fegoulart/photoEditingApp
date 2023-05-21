@@ -37,6 +37,7 @@ final class PhotoEditingView: UIView {
 
     var startAction: ButtonHandler?
     private(set) var deleteAction: ButtonHandler?
+    private(set) var saveAction: (() -> ())?
 
     lazy var segmentControl: UISegmentedControl = {
         let segment = UISegmentedControl()
@@ -77,6 +78,17 @@ final class PhotoEditingView: UIView {
 
     lazy var deleteButton: UIButton = {
         let image = UIImage(systemName: "trash.circle", withConfiguration:  UIImage.SymbolConfiguration(pointSize: self.defaultButtonSize.y))
+        let button = UIButton()
+        button.setBackgroundImage(image, for: .normal)
+        button.layoutIfNeeded()
+        button.subviews.first?.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(mainButtonsTarget), for: .touchUpInside)
+        button.isHidden = true
+        return button
+    }()
+
+    lazy var saveButton: UIButton = {
+        let image = UIImage(systemName: "folder.circle", withConfiguration:  UIImage.SymbolConfiguration(pointSize: self.defaultButtonSize.y))
         let button = UIButton()
         button.setBackgroundImage(image, for: .normal)
         button.layoutIfNeeded()
@@ -173,10 +185,15 @@ final class PhotoEditingView: UIView {
         return slider
     }()
 
-    init(startAction: @escaping ButtonHandler, deleteAction: @escaping ButtonHandler) {
+    init(
+        startAction: @escaping ButtonHandler,
+        deleteAction: @escaping ButtonHandler,
+        saveAction: @escaping (UIImage?)->()
+    ) {
         self.startAction = startAction
         super.init(frame: CGRect.zero)
         self.deleteAction = deleteDecorated(with: deleteAction)
+        self.saveAction = saveDecorated(with: saveAction)
         buildView()
     }
 

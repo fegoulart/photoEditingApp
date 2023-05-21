@@ -17,7 +17,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let deleteAction: PhotoEditingView.ButtonHandler = { [weak viewModel] in
             viewModel?.clear()
         }
-        let photoEditingView = PhotoEditingView(startAction: startAction, deleteAction: deleteAction)
+
+        let imageSaver = PhotoAlbumSaver()
+        let saveAction: (UIImage?) -> Void = { [weak viewModel] image in
+            imageSaver.writeToPhotoAlbum(image: image) { result in
+                switch result {
+                case .success:
+                    viewModel?.setOperationResult("Image successfully saved")
+                    viewModel?.clear()
+                case .failure:
+                    viewModel?.setOperationResult("Error: please try again later")
+                }
+            }
+        }
+        let photoEditingView = PhotoEditingView(startAction: startAction, deleteAction: deleteAction, saveAction: saveAction)
 
         photoEditingView.startAction = startAction
         let viewController = ViewController(view: photoEditingView, imagePicker: imagePicker, viewModel: viewModel, stateChangeManager: ViewStateChangeManager())

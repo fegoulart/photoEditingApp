@@ -11,6 +11,7 @@ extension PhotoEditingView: ViewCodeProtocol {
         addSubview(brightnessSlider)
         addSubview(contrastSlider)
         addSubview(saturationSlider)
+        addSubview(saveButton)
     }
 
     func setupConstraints() {
@@ -36,6 +37,15 @@ extension PhotoEditingView: ViewCodeProtocol {
         }
 
         deleteButton.constraint { view in
+            [
+                view.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: defaultMargin),
+                view.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
+                view.leadingAnchor.constraint(equalTo: photoImageView.leadingAnchor),
+                view.widthAnchor.constraint(equalToConstant: defaultButtonSize.x)
+            ]
+        }
+
+        saveButton.constraint { view in
             [
                 view.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: defaultMargin),
                 view.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1),
@@ -88,7 +98,6 @@ extension PhotoEditingView: ViewCodeProtocol {
                 view.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: -1 * (defaultMargin + segmentHeight))
             ]
         }
-
     }
 
     func setImageConstraints(_ newHeight: CGFloat) {
@@ -115,10 +124,10 @@ import SwiftUI
 
 struct PhotoEditingView_Preview: PreviewProvider {
     static var previews: some View {
-        PhotoEditingView(startAction: { }, deleteAction: {} ).showPreview().previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max")).previewDisplayName("iPhone 14 Pro Max")
+        PhotoEditingView(startAction: { }, deleteAction: {}, saveAction: {_ in } ).showPreview().previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max")).previewDisplayName("iPhone 14 Pro Max")
 
 
-        PhotoEditingView(startAction: { }, deleteAction: {} ).showPreview().previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)")).previewDisplayName("iPhone SE (3rd generation)")
+        PhotoEditingView(startAction: { }, deleteAction: {}, saveAction: {_ in } ).showPreview().previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)")).previewDisplayName("iPhone SE (3rd generation)")
 
     }
 }

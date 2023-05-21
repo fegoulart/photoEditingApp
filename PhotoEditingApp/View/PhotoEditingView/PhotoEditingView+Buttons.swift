@@ -8,6 +8,8 @@ extension PhotoEditingView {
             startAction?()
         case deleteButton:
             deleteAction?()
+        case saveButton:
+            saveAction?()
         default: break
         }
     }
