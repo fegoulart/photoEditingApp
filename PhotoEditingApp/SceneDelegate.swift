@@ -6,7 +6,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
-        let imagePicker = PhotoEditingImagePicker(pickerController: UIImagePickerController())
+        let permissionChecker = PhotoEditingAppPermissionChecker()
+        let imagePickerViewModel = ImagePickerViewModel(permissionChecker: permissionChecker)
+        let imagePicker = PhotoEditingImagePicker(pickerController: UIImagePickerController(), viewModel: imagePickerViewModel)
         let startAction: PhotoEditingView.ButtonHandler = { [weak imagePicker] in
             imagePicker?.present()
         }
