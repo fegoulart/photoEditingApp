@@ -5,12 +5,26 @@ extension PhotoEditingView {
     func showAdjusts() {
         DispatchQueue.main.async {
             self.adjustsStackView.fadeIn()
+            if self.brightnessButton.isSelected {
+                self.brightnessSlider.fadeIn()
+            } else {
+                if self.contrastButton.isSelected {
+                    self.contrastSlider.fadeIn()
+                } else {
+                    if self.saturationButton.isSelected {
+                        self.saturationSlider.fadeIn()
+                    }
+                }
+            }
         }
     }
     
     func showFilters() {
         DispatchQueue.main.async {
             self.adjustsStackView.fadeOut()
+            self.brightnessSlider.fadeOut()
+            self.contrastSlider.fadeOut()
+            self.saturationSlider.fadeOut()
         }
     }
 
