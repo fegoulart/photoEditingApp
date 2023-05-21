@@ -4,15 +4,15 @@ final class PhotoEditingImagePicker: NSObject, ImagePicker {
     weak var delegate: ImagePickerDelegate?
 
     let pickerController: UIImagePickerController
-    let viewModel: ImagePickerViewModel
+    let pickerViewModel: ImagePickerViewModel 
     weak var presentationController: UIViewController?
 
     init(
         pickerController: UIImagePickerController,
-        viewModel: ImagePickerViewModel
+        pickerViewModel: ImagePickerViewModel
     ) {
         self.pickerController = pickerController
-        self.viewModel = viewModel
+        self.pickerViewModel = pickerViewModel
         super.init()
         self.pickerController.allowsEditing = true
         self.pickerController.mediaTypes = ["public.image"]
@@ -21,7 +21,7 @@ final class PhotoEditingImagePicker: NSObject, ImagePicker {
 
     func present() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        viewModel.checkPermission(for: .camera) { [weak self] isCameraAllowed in
+        pickerViewModel.checkPermission(for: .camera) { [weak self] isCameraAllowed in
             if isCameraAllowed {
                 if let action = self?.action(for: .camera, title: "Take photo") {
                     DispatchQueue.main.async {
@@ -29,7 +29,7 @@ final class PhotoEditingImagePicker: NSObject, ImagePicker {
                     }
                 }
             }
-            self?.viewModel.checkPermission(for: .photoLibrary) { [weak self] isPhotoLibraryAllowed in
+            self?.pickerViewModel.checkPermission(for: .photoLibrary) { [weak self] isPhotoLibraryAllowed in
                 DispatchQueue.main.async {
                     if isPhotoLibraryAllowed {
                         if let action = self?.action(for: .photoLibrary, title: "Photo library") {
