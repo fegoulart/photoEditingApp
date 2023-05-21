@@ -1,6 +1,7 @@
 import Foundation
 
 import UIKit
+import MetalKit
 
 final class PhotoEditingView: UIView {
 
@@ -49,8 +50,8 @@ final class PhotoEditingView: UIView {
         })
     }()
 
-    lazy var photoImageView: UIImageView = {
-        let imageView = UIImageView()
+    lazy var photoImageView: MetalView = {
+        let imageView = MetalView()
         imageView.contentMode = .scaleAspectFit
         imageView.isHidden = true
         imageView.backgroundColor = .clear
