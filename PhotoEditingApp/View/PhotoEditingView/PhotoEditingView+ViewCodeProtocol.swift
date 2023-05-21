@@ -8,6 +8,9 @@ extension PhotoEditingView: ViewCodeProtocol {
         addSubview(photoImageView)
         addSubview(deleteButton)
         addSubview(adjustsStackView)
+        addSubview(brightnessSlider)
+        addSubview(contrastSlider)
+        addSubview(saturationSlider)
     }
 
     func setupConstraints() {
@@ -46,6 +49,33 @@ extension PhotoEditingView: ViewCodeProtocol {
                 view.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
                 view.heightAnchor.constraint(equalToConstant: defaultButtonSize.y),
                 view.widthAnchor.constraint(equalToConstant: (screenWidth ?? iphoneSE22Width) - 6 * defaultMargin),
+                view.bottomAnchor.constraint(lessThanOrEqualTo: segmentControl.topAnchor, constant: -1 * defaultMargin)
+            ]
+        }
+
+        brightnessSlider.constraint { view in
+            [
+                view.topAnchor.constraint(equalTo: adjustsStackView.bottomAnchor, constant: defaultMargin),
+                view.trailingAnchor.constraint(equalTo: segmentControl.trailingAnchor, constant: 0),
+                view.leadingAnchor.constraint(equalTo: segmentControl.leadingAnchor, constant: 0),
+                view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -1 * defaultMargin)
+            ]
+        }
+
+        contrastSlider.constraint { view in
+            [
+                view.topAnchor.constraint(equalTo: adjustsStackView.bottomAnchor, constant: defaultMargin),
+                view.trailingAnchor.constraint(equalTo: segmentControl.trailingAnchor, constant: 0),
+                view.leadingAnchor.constraint(equalTo: segmentControl.leadingAnchor, constant: 0),
+                view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -1 * defaultMargin)
+            ]
+        }
+
+        saturationSlider.constraint { view in
+            [
+                view.topAnchor.constraint(equalTo: adjustsStackView.bottomAnchor, constant: defaultMargin),
+                view.trailingAnchor.constraint(equalTo: segmentControl.trailingAnchor, constant: 0),
+                view.leadingAnchor.constraint(equalTo: segmentControl.leadingAnchor, constant: 0),
                 view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -1 * defaultMargin)
             ]
         }

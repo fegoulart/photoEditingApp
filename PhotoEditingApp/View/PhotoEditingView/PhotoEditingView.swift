@@ -11,7 +11,15 @@ final class PhotoEditingView: UIView {
     var largeButtonSize: CGPoint { CGPoint(x: 100, y: 100) }
     var defaultButtonSize: CGPoint { CGPoint(x: 44, y: 44) }
     var iphoneSE22Width: CGFloat { 375 }
+    var originalCIImage: CIImage? = nil {
+        didSet {
+            self.originalFilter = CIFilter(name: "CIColorControls")
+            self.originalFilter?.setValue(originalCIImage, forKey: kCIInputImageKey)
+        }
+    }
 
+    var originalFilter: CIFilter?
+    
     var margins: UILayoutGuide {
         self.layoutMarginsGuide
     }
@@ -78,9 +86,11 @@ final class PhotoEditingView: UIView {
     lazy var brightnessButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: defaultButtonSize.x, height: defaultButtonSize.y)
-        button.setBackgroundImage(brightnessIcon, for: .normal)
+        button.setBackgroundImage(brightnessIcon.withTintColor(.lightGray, renderingMode: .alwaysOriginal), for: .normal)
+        button.setBackgroundImage(brightnessIcon.withTintColor(.black, renderingMode: .alwaysOriginal), for: .selected)
         button.layoutIfNeeded()
         button.subviews.first?.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(adjustSelected), for: .touchUpInside)
         return button
     }()
 
@@ -91,9 +101,11 @@ final class PhotoEditingView: UIView {
     lazy var saturationButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: defaultButtonSize.x, height: defaultButtonSize.y)
-        button.setBackgroundImage(saturationIcon, for: .normal)
+        button.setBackgroundImage(saturationIcon.withTintColor(.lightGray, renderingMode: .alwaysOriginal), for: .normal)
+        button.setBackgroundImage(saturationIcon.withTintColor(.black, renderingMode: .alwaysOriginal), for: .selected)
         button.layoutIfNeeded()
         button.subviews.first?.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(adjustSelected), for: .touchUpInside)
         return button
     }()
 
@@ -104,10 +116,23 @@ final class PhotoEditingView: UIView {
     lazy var contrastButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: defaultButtonSize.x, height: defaultButtonSize.y)
-        button.setBackgroundImage(contrastIcon, for: .normal)
+        button.setBackgroundImage(contrastIcon.withTintColor(.lightGray, renderingMode: .alwaysOriginal), for: .normal)
+        button.setBackgroundImage(contrastIcon.withTintColor(.black, renderingMode: .alwaysOriginal), for: .selected)
         button.layoutIfNeeded()
         button.subviews.first?.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(adjustSelected), for: .touchUpInside)
         return button
+    }()
+
+    lazy var contrastSlider: UISlider = {
+        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: margins.layoutFrame.width - 2 * defaultMargin, height: defaultButtonSize.y))
+        slider.minimumValue = 0.25
+        slider.maximumValue = 4
+        slider.value = 1
+        slider.center = self.center
+        slider.isHidden = true
+        slider.addTarget(self, action: #selector(sliderValueDidChange), for: .valueChanged)
+        return slider
     }()
 
     lazy var adjustsStackView: UIStackView = {
@@ -117,6 +142,28 @@ final class PhotoEditingView: UIView {
         stackView.distribution = .fillEqually
         stackView.isHidden = true
         return stackView
+    }()
+
+    lazy var brightnessSlider: UISlider = {
+        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: margins.layoutFrame.width - 2 * defaultMargin, height: defaultButtonSize.y))
+        slider.minimumValue = -1
+        slider.maximumValue = 1
+        slider.value = 0
+        slider.center = self.center
+        slider.isHidden = true
+        slider.addTarget(self, action: #selector(sliderValueDidChange), for: .valueChanged)
+        return slider
+    }()
+
+    lazy var saturationSlider: UISlider = {
+        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: margins.layoutFrame.width - 2 * defaultMargin, height: defaultButtonSize.y))
+        slider.minimumValue = 0
+        slider.maximumValue = 2
+        slider.value = 1
+        slider.center = self.center
+        slider.isHidden = true
+        slider.addTarget(self, action: #selector(sliderValueDidChange), for: .valueChanged)
+        return slider
     }()
 
     init(startAction: @escaping ButtonHandler, deleteAction: @escaping ButtonHandler) {

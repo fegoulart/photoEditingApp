@@ -64,6 +64,9 @@ extension ViewController {
             self.photoEditingView.startButton.fadeIn()
             self.photoEditingView.segmentControl.fadeOut()
             self.photoEditingView.adjustsStackView.fadeOut()
+            self.photoEditingView.contrastSlider.fadeOut()
+            self.photoEditingView.brightnessSlider.fadeOut()
+            self.photoEditingView.saturationSlider.fadeOut()
             self.photoEditingView.deleteButton.fadeOut {
                 self.photoEditingView.setPhoto(nil)
                 self.stateChangeManager.signal()

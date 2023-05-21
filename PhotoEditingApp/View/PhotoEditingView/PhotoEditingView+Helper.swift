@@ -2,8 +2,15 @@ import UIKit
 
 extension PhotoEditingView {
     func setPhoto(_ image: UIImage?) {
-        photoImageView.image = image
-        guard let image = image else { setImageConstraints(0); return }
+        guard let image = image else {
+            setImageConstraints(0)
+            originalCIImage = nil
+            return
+        }
+        defer {
+            originalCIImage = CIImage(image: image)
+            photoImageView.image = originalCIImage
+        }
         let ratio = image.size.width / image.size.height
         let newHeight = photoImageView.frame.width / ratio
         setImageConstraints(newHeight)
