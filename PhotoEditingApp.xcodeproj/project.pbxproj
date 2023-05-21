@@ -27,6 +27,10 @@
 		6CCC756C2A1923EE0002CAF7 /* StateChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC756B2A1923EE0002CAF7 /* StateChangeManager.swift */; };
 		6CCC756E2A19241F0002CAF7 /* ViewStateChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC756D2A19241F0002CAF7 /* ViewStateChangeManager.swift */; };
 		6CCC75762A199A1D0002CAF7 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75752A199A1D0002CAF7 /* MetalView.swift */; };
+		6CCC757A2A1A605F0002CAF7 /* PermissionChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75792A1A605F0002CAF7 /* PermissionChecker.swift */; };
+		6CCC757D2A1A60B20002CAF7 /* AppPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC757C2A1A60B20002CAF7 /* AppPermission.swift */; };
+		6CCC757F2A1A60E80002CAF7 /* PhotoEditingAppPermissionChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC757E2A1A60E80002CAF7 /* PhotoEditingAppPermissionChecker.swift */; };
+		6CCC75832A1A6FC40002CAF7 /* ImagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75822A1A6FC40002CAF7 /* ImagePickerViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +67,10 @@
 		6CCC756B2A1923EE0002CAF7 /* StateChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateChangeManager.swift; sourceTree = "<group>"; };
 		6CCC756D2A19241F0002CAF7 /* ViewStateChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStateChangeManager.swift; sourceTree = "<group>"; };
 		6CCC75752A199A1D0002CAF7 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		6CCC75792A1A605F0002CAF7 /* PermissionChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionChecker.swift; sourceTree = "<group>"; };
+		6CCC757C2A1A60B20002CAF7 /* AppPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPermission.swift; sourceTree = "<group>"; };
+		6CCC757E2A1A60E80002CAF7 /* PhotoEditingAppPermissionChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingAppPermissionChecker.swift; sourceTree = "<group>"; };
+		6CCC75822A1A6FC40002CAF7 /* ImagePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +112,7 @@
 		6C10E1A02A1525B700A6E090 /* PhotoEditingApp */ = {
 			isa = PBXGroup;
 			children = (
+				6CCC757B2A1A60A20002CAF7 /* Model */,
 				6C335B242A16E3C6007B2AB0 /* ViewModel */,
 				6C335B172A15533C007B2AB0 /* View */,
 				6C10E1A12A1525B700A6E090 /* AppDelegate.swift */,
@@ -137,6 +146,7 @@
 		6C335B172A15533C007B2AB0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6CCC75782A1A604F0002CAF7 /* PhotoEditingAppPermissionChecker */,
 				6CCC756A2A1923DA0002CAF7 /* StateChangeManager */,
 				6C10E1A52A1525B700A6E090 /* ViewController.swift */,
 				6CCC75672A180A540002CAF7 /* PhotoEditingView */,
@@ -160,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				6C335B222A16D3C6007B2AB0 /* ViewModel.swift */,
+				6CCC75822A1A6FC40002CAF7 /* ImagePickerViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -190,6 +201,23 @@
 				6CCC75752A199A1D0002CAF7 /* MetalView.swift */,
 			);
 			path = MetalHelper;
+			sourceTree = "<group>";
+		};
+		6CCC75782A1A604F0002CAF7 /* PhotoEditingAppPermissionChecker */ = {
+			isa = PBXGroup;
+			children = (
+				6CCC757E2A1A60E80002CAF7 /* PhotoEditingAppPermissionChecker.swift */,
+			);
+			path = PhotoEditingAppPermissionChecker;
+			sourceTree = "<group>";
+		};
+		6CCC757B2A1A60A20002CAF7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6CCC75792A1A605F0002CAF7 /* PermissionChecker.swift */,
+				6CCC757C2A1A60B20002CAF7 /* AppPermission.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,8 +334,12 @@
 				6C335B122A154701007B2AB0 /* UIView+Extensions.swift in Sources */,
 				6CCC75642A1808E50002CAF7 /* UIResponder+Extensions.swift in Sources */,
 				6C10E1A42A1525B700A6E090 /* SceneDelegate.swift in Sources */,
+				6CCC75832A1A6FC40002CAF7 /* ImagePickerViewModel.swift in Sources */,
+				6CCC757A2A1A605F0002CAF7 /* PermissionChecker.swift in Sources */,
 				6CCC75662A18094A0002CAF7 /* PhotoEditingView+Helper.swift in Sources */,
+				6CCC757D2A1A60B20002CAF7 /* AppPermission.swift in Sources */,
 				6CCC756C2A1923EE0002CAF7 /* StateChangeManager.swift in Sources */,
+				6CCC757F2A1A60E80002CAF7 /* PhotoEditingAppPermissionChecker.swift in Sources */,
 				6CCC75692A180F1C0002CAF7 /* PhotoEditingView+Adjusts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
