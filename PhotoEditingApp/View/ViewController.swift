@@ -6,8 +6,8 @@ final class ViewController: UIViewController {
     var imagePicker: ImagePicker
     let photoEditingView: PhotoEditingView
     let viewModel: ViewModel
-    var cancellable: AnyCancellable?
-    var messageCancellable: AnyCancellable?
+    private var cancellable: AnyCancellable?
+    private var messageCancellable: AnyCancellable?
     let stateChangeManager: StateChangeManager
 
     override func viewDidLoad() {
@@ -37,22 +37,22 @@ final class ViewController: UIViewController {
 
     private func subscribeToImage() {
         self.photoEditingView.setPhoto(nil)
-        cancellable = viewModel.$imageData.dropFirst(1).sink { imageData in
-            guard let imageData: Data = imageData else { self.setEmptyState(); return }
+        cancellable = viewModel.$imageData.dropFirst(1).sink { [weak self] imageData in
+            guard let imageData: Data = imageData else { self?.setEmptyState(); return }
             assert(!Thread.isMainThread)
             if let image = UIImage(data: imageData){
-                self.setEditingState(with: image)
+                self?.setEditingState(with: image)
             }
         }
     }
 
     private func subscribeToOperationResult() {
-        messageCancellable = viewModel.$operationResult.dropFirst().sink { resultString in
+        messageCancellable = viewModel.$operationResult.dropFirst().sink { [weak self] resultString in
             guard !resultString.isEmpty else { return }
             let alertController = UIAlertController(title: "Operation status", message: resultString, preferredStyle: .alert)
             let actionOk = UIAlertAction(title: "Ok", style: .default) { _ in }
             alertController.addAction(actionOk)
-            self.present(alertController, animated: true)
+            self?.present(alertController, animated: true)
         }
     }
 

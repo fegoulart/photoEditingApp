@@ -3,27 +3,50 @@ import XCTest
 
 final class PhotoEditingAppTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testComposerMemoryLeak() throws {
+        _ = makeSUT()
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    // MARK: - Helpers
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> ViewController? {
+        let permissionChecker = PhotoEditingAppPermissionChecker()
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        let imagePickerViewModel = ImagePickerViewModel(permissionChecker: permissionChecker)
+        trackForMemoryLeaks(imagePickerViewModel, file: file, line: line)
+        let imagePicker = PhotoEditingImagePicker(pickerController: UIImagePickerController(), pickerViewModel: imagePickerViewModel)
+        trackForMemoryLeaks(imagePicker, file: file, line: line)
+        let startAction: PhotoEditingView.ButtonHandler = { [weak imagePicker] in
+            imagePicker?.present()
         }
+
+        let viewModel = ViewModel(cacheImageService: FileCacheImageService())
+        trackForMemoryLeaks(viewModel, file: file, line: line)
+        let deleteAction: PhotoEditingView.ButtonHandler = { [weak viewModel] in
+            viewModel?.clear()
+        }
+        let imageSaver = PhotoAlbumSaver()
+        let saveAction: (UIImage?) -> Void = { [weak viewModel] image in
+            imageSaver.writeToPhotoAlbum(image: image) { result in
+                switch result {
+                case .success:
+                    viewModel?.setOperationResult("Image successfully saved")
+                    viewModel?.clear()
+                case .failure:
+                    viewModel?.setOperationResult("Error: please try again later")
+                }
+            }
+        }
+        trackForMemoryLeaks(imageSaver, file: file, line: line)
+        let photoEditingView = PhotoEditingView(startAction: startAction, deleteAction: deleteAction, saveAction: saveAction)
+
+        photoEditingView.startAction = startAction
+        trackForMemoryLeaks(photoEditingView, file: file, line: line)
+        let viewController = ViewController(view: photoEditingView, imagePicker: imagePicker, viewModel: viewModel, stateChangeManager: ViewStateChangeManager())
+        imagePicker.delegate = viewController
+        imagePicker.presentationController = viewController
+        trackForMemoryLeaks(viewController, file: file, line: line)
+        return viewController
     }
 
 }
