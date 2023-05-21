@@ -15,6 +15,11 @@ class MetalView: MTKView {
         }
     }
 
+    var toUIImage: UIImage? {
+        guard let image = image, let cgImg = context.createCGImage(image, from: image.extent) else { return nil }
+        return UIImage(cgImage: cgImg)
+    }
+
     init() {
         let device = MTLCreateSystemDefaultDevice()
         assert(device != nil, "Cannot define metal device")
