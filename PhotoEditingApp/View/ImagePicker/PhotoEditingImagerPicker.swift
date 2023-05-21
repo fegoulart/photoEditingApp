@@ -4,10 +4,15 @@ final class PhotoEditingImagePicker: NSObject, ImagePicker {
     weak var delegate: ImagePickerDelegate?
 
     let pickerController: UIImagePickerController
+    let viewModel: ImagePickerViewModel
     weak var presentationController: UIViewController?
 
-    init(pickerController: UIImagePickerController) {
+    init(
+        pickerController: UIImagePickerController,
+        viewModel: ImagePickerViewModel
+    ) {
         self.pickerController = pickerController
+        self.viewModel = viewModel
         super.init()
         self.pickerController.allowsEditing = true
         self.pickerController.mediaTypes = ["public.image"]
@@ -16,17 +21,31 @@ final class PhotoEditingImagePicker: NSObject, ImagePicker {
 
     func present() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        viewModel.checkPermission(for: .camera) { [weak self] isCameraAllowed in
+            if isCameraAllowed {
+                if let action = self?.action(for: .camera, title: "Take photo") {
+                    DispatchQueue.main.async {
+                        alertController.addAction(action)
+                    }
+                }
+            }
+            self?.viewModel.checkPermission(for: .photoLibrary) { [weak self] isPhotoLibraryAllowed in
+                DispatchQueue.main.async {
+                    if isPhotoLibraryAllowed {
+                        if let action = self?.action(for: .photoLibrary, title: "Photo library") {
+                            alertController.addAction(action)
+                        }
+                    }
+                    guard !alertController.actions.isEmpty else {
+                        self?.alertPermissionsNeeded()
+                        return
+                    }
+                    alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    self?.presentationController?.present(alertController, animated: true)
+                }
+            }
 
-        if let action = self.action(for: .camera, title: "Take photo") {
-            alertController.addAction(action)
         }
-        if let action = self.action(for: .photoLibrary, title: "Photo library") {
-            alertController.addAction(action)
-        }
-
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-        self.presentationController?.present(alertController, animated: true)
     }
 
     private func action(for type: UIImagePickerController.SourceType, title: String) -> UIAlertAction? {
@@ -38,6 +57,23 @@ final class PhotoEditingImagePicker: NSObject, ImagePicker {
             self.pickerController.sourceType = type
             self.presentationController?.present(self.pickerController, animated: true)
         }
+    }
+
+    private func alertPermissionsNeeded() {
+        guard let settingsAppURL = URL(string: UIApplication.openSettingsURLString) else { return }
+
+        let alert = UIAlertController(
+            title: "Need Photos and Camera Access",
+            message: "Photos and Camera accesses are required to make full use of this app.",
+            preferredStyle: UIAlertController.Style.alert
+        )
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Allow Photos & Camera", style: .cancel, handler: { (alert) -> Void in
+            UIApplication.shared.open(settingsAppURL, options: [:], completionHandler: nil)
+        }))
+
+        self.presentationController?.present(alert, animated: true, completion: nil)
     }
 }
 
