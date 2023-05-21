@@ -9,7 +9,7 @@ extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate(closure(self))
     }
-
+#if DEBUG
     private struct Preview: UIViewRepresentable {
         typealias UIViewType = UIView
         let view: UIView
@@ -24,7 +24,7 @@ extension UIView {
     func showPreview() -> some View {
         Preview(view: self)
     }
-
+#endif
 
     func fadeIn(_ duration: TimeInterval = 0.2, onCompletion: (() -> Void)? = nil) {
         assert(Thread.isMainThread)
