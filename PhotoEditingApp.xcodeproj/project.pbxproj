@@ -38,6 +38,8 @@
 		6CCC758E2A1AB24E0002CAF7 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC758D2A1AB24E0002CAF7 /* ImageSaver.swift */; };
 		6CCC75902A1AB2670002CAF7 /* ImageSaverError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC758F2A1AB2670002CAF7 /* ImageSaverError.swift */; };
 		6CCC75922A1AB2A00002CAF7 /* PhotoAlbumSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75912A1AB2A00002CAF7 /* PhotoAlbumSaver.swift */; };
+		6CCC75952A1AB52A0002CAF7 /* XCTest+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75942A1AB52A0002CAF7 /* XCTest+MemoryLeakTracking.swift */; };
+		6CCC75972A1AB5650002CAF7 /* PhotoEditingComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC75962A1AB5650002CAF7 /* PhotoEditingComposer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		6CCC758D2A1AB24E0002CAF7 /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 		6CCC758F2A1AB2670002CAF7 /* ImageSaverError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaverError.swift; sourceTree = "<group>"; };
 		6CCC75912A1AB2A00002CAF7 /* PhotoAlbumSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumSaver.swift; sourceTree = "<group>"; };
+		6CCC75942A1AB52A0002CAF7 /* XCTest+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		6CCC75962A1AB5650002CAF7 /* PhotoEditingComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditingComposer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +139,7 @@
 				6C10E1AA2A1525B800A6E090 /* Assets.xcassets */,
 				6C10E1AC2A1525B800A6E090 /* LaunchScreen.storyboard */,
 				6C10E1AF2A1525B800A6E090 /* Info.plist */,
+				6CCC75962A1AB5650002CAF7 /* PhotoEditingComposer.swift */,
 			);
 			path = PhotoEditingApp;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 		6C10E1B72A1525B800A6E090 /* PhotoEditingAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				6CCC75932A1AB4F80002CAF7 /* Helper */,
 				6C10E1B82A1525B800A6E090 /* PhotoEditingAppTests.swift */,
 			);
 			path = PhotoEditingAppTests;
@@ -239,6 +245,14 @@
 				6CCC75912A1AB2A00002CAF7 /* PhotoAlbumSaver.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		6CCC75932A1AB4F80002CAF7 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				6CCC75942A1AB52A0002CAF7 /* XCTest+MemoryLeakTracking.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,6 +371,7 @@
 				6CCC75622A1808AF0002CAF7 /* PhotoEditingView+ViewCodeProtocol.swift in Sources */,
 				6C335B122A154701007B2AB0 /* UIView+Extensions.swift in Sources */,
 				6CCC75642A1808E50002CAF7 /* UIResponder+Extensions.swift in Sources */,
+				6CCC75972A1AB5650002CAF7 /* PhotoEditingComposer.swift in Sources */,
 				6C10E1A42A1525B700A6E090 /* SceneDelegate.swift in Sources */,
 				6CCC75832A1A6FC40002CAF7 /* ImagePickerViewModel.swift in Sources */,
 				6CCC757A2A1A605F0002CAF7 /* PermissionChecker.swift in Sources */,
@@ -377,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C10E1B92A1525B800A6E090 /* PhotoEditingAppTests.swift in Sources */,
+				6CCC75952A1AB52A0002CAF7 /* XCTest+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,6 +605,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L7JGQMYBFY;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
@@ -608,6 +625,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L7JGQMYBFY;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
