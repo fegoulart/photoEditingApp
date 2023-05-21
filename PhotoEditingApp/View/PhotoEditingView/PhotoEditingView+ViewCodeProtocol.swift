@@ -80,11 +80,20 @@ extension PhotoEditingView: ViewCodeProtocol {
             ]
         }
 
+        photoImageView.constraint { view in
+            [
+                view.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: defaultMargin),
+                view.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -1 * defaultMargin),
+                view.heightAnchor.constraint(lessThanOrEqualTo: startButton.heightAnchor),
+                view.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: -1 * (defaultMargin + segmentHeight))
+            ]
+        }
+
     }
 
     func setImageConstraints(_ newHeight: CGFloat) {
+        guard newHeight > 0 else { return }
         NSLayoutConstraint.deactivate(photoImageView.constraints)
-
         photoImageView.constraint { view in
             [
                 view.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: defaultMargin),

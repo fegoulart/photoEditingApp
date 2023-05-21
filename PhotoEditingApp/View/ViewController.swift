@@ -12,7 +12,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         self.view = photoEditingView
         super.viewDidLoad()
-        self.viewModel.retrieveImage()
+        checkImageCache()
     }
 
     required init?(coder: NSCoder) {
@@ -34,13 +34,18 @@ final class ViewController: UIViewController {
     }
 
     private func subscribeToImage() {
-        cancellable = viewModel.$imageData.sink { imageData in
+        self.photoEditingView.setPhoto(nil)
+        cancellable = viewModel.$imageData.dropFirst(1).sink { imageData in
             guard let imageData: Data = imageData else { self.setEmptyState(); return }
             assert(!Thread.isMainThread)
             if let image = UIImage(data: imageData){
                 self.setEditingState(with: image)
             }
         }
+    }
+
+    private func checkImageCache() {
+        self.viewModel.retrieveImage()
     }
 }
 
@@ -49,7 +54,7 @@ extension ViewController: ImagePickerDelegate {
         guard let image: UIKit.UIImage = image as? UIKit.UIImage else { return }
         setEditingState(with: image)
         guard let pngData = image.pngData() else { return }
-        self.viewModel.cacheImage(pngData)
+        viewModel.cacheImage(pngData)
     }
 }
 
@@ -88,7 +93,3 @@ extension ViewController {
         }
     }
 }
-
-
-
-

@@ -13,6 +13,7 @@ final class PhotoEditingView: UIView {
     var iphoneSE22Width: CGFloat { 375 }
     var originalCIImage: CIImage? = nil {
         didSet {
+            guard originalCIImage != nil else { return }
             self.originalFilter = CIFilter(name: "CIColorControls")
             self.originalFilter?.setValue(originalCIImage, forKey: kCIInputImageKey)
         }
@@ -53,9 +54,11 @@ final class PhotoEditingView: UIView {
         configuration.image = image
         configuration.imagePlacement = .all
         assert(startAction != nil, "StartAction should not be nil")
-        return UIButton(configuration: configuration, primaryAction: UIAction { _ in
+        let button = UIButton(configuration: configuration, primaryAction: UIAction { _ in
             self.startAction?()
         })
+        button.isHidden = true
+        return button
     }()
 
     lazy var photoImageView: MetalView = {
