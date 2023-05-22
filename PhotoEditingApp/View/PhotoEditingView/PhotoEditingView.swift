@@ -11,15 +11,16 @@ final class PhotoEditingView: UIView {
     var largeButtonSize: CGPoint { CGPoint(x: 100, y: 100) }
     var defaultButtonSize: CGPoint { CGPoint(x: 44, y: 44) }
     var iphoneSE22Width: CGFloat { 375 }
-    var originalCIImage: CIImage? = nil {
+    var currentCIImage: CIImage? = nil {
         didSet {
-            guard originalCIImage != nil else { return }
-            self.originalFilter = CIFilter(name: "CIColorControls")
-            self.originalFilter?.setValue(originalCIImage, forKey: kCIInputImageKey)
+            guard currentCIImage != nil else { return }
+            self.currentAdjustsFilter = CIFilter(name: "CIColorControls")
+            self.currentAdjustsFilter?.setValue(currentCIImage, forKey: kCIInputImageKey)
         }
     }
 
-    var originalFilter: CIFilter?
+    var currentAdjustsFilter: CIFilter?
+    var currentFilterCIFilter: CIFilter?
     
     var margins: UILayoutGuide {
         self.layoutMarginsGuide

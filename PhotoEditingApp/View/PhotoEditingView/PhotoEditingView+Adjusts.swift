@@ -74,7 +74,7 @@ extension PhotoEditingView {
         if saveButton.isHidden { saveButton.fadeIn() }
         switch sender {
         case brightnessSlider:
-            guard let originalFilter = originalFilter else {
+            guard let originalFilter = currentAdjustsFilter else {
                 assertionFailure("Original filter should not be nil")
                 return
             }
@@ -84,7 +84,7 @@ extension PhotoEditingView {
                 photoImageView.image = ciimage
             }
         case contrastSlider:
-            guard let originalFilter = originalFilter else {
+            guard let originalFilter = currentAdjustsFilter else {
                 assertionFailure("Original filter should not be nil")
                 return
             }
@@ -94,7 +94,7 @@ extension PhotoEditingView {
                 photoImageView.image = ciimage
             }
         case saturationSlider:
-            guard let originalFilter = originalFilter else {
+            guard let originalFilter = currentAdjustsFilter else {
                 assertionFailure("Original filter should not be nil")
                 return
             }

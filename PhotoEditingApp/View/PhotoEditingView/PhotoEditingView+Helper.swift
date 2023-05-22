@@ -4,12 +4,12 @@ extension PhotoEditingView {
     func setPhoto(_ image: UIImage?) {
         guard let image = image else {
             setImageConstraints(0)
-            originalCIImage = nil
+            currentCIImage = nil
             return
         }
         defer {
-            originalCIImage = CIImage(image: image)
-            photoImageView.image = originalCIImage
+            currentCIImage = CIImage(image: image)
+            photoImageView.image = currentCIImage
         }
         let ratio = image.size.width / image.size.height
         let newHeight = photoImageView.frame.width / ratio
