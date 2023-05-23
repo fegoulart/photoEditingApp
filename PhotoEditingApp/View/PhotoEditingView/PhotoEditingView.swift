@@ -49,6 +49,8 @@ final class PhotoEditingView: UIView {
         let segment = UISegmentedControl()
         segment.insertSegment(withTitle: "Filters", at: 0, animated: true)
         segment.insertSegment(withTitle: "Adjusts", at: 1, animated: true)
+        segment.selectedSegmentTintColor = .blue
+        segment.backgroundColor = .darkGray
         segment.addTarget(self, action: #selector(segmentTarget), for: .valueChanged)
         return segment
     }()
@@ -195,7 +197,7 @@ final class PhotoEditingView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         collectionView.collectionViewLayout = makeCollectionViewLayout()
         collectionView.register(FilterCell.self, forCellWithReuseIdentifier: FilterCell.cellId)
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .clear
         collectionView.isHidden = true
         return collectionView
     }()
