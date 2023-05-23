@@ -21,6 +21,7 @@ extension PhotoEditingView {
             self.currentCIImage = self.photoImageView.image
             self.currentFilter = CIFilter(name: "CIColorControls")
             self.currentFilter?.setValue(self.currentCIImage, forKey: kCIInputImageKey)
+            self.photoImageView.setNeedsDisplay()
         }
     }
     
@@ -34,6 +35,7 @@ extension PhotoEditingView {
                 self.layoutIfNeeded()
                 self.filteredSelected = true
                 self.currentCIImage = self.photoImageView.image
+                self.photoImageView.setNeedsDisplay()
             }
         }
     }
@@ -92,6 +94,7 @@ extension PhotoEditingView {
             originalFilter.setValue(sender.value, forKey: kCIInputBrightnessKey)
             if let ciimage = originalFilter.outputImage {
                 photoImageView.image = ciimage
+                photoImageView.setNeedsDisplay()
             }
         case contrastSlider:
             guard let originalFilter = currentFilter else {
@@ -102,6 +105,7 @@ extension PhotoEditingView {
             originalFilter.setValue(sender.value, forKey: kCIInputContrastKey)
             if let ciimage = originalFilter.outputImage {
                 photoImageView.image = ciimage
+                photoImageView.setNeedsDisplay()
             }
         case saturationSlider:
             guard let originalFilter = currentFilter else {
@@ -112,6 +116,7 @@ extension PhotoEditingView {
             originalFilter.setValue(sender.value, forKey: kCIInputSaturationKey)
             if let ciimage = originalFilter.outputImage {
                 photoImageView.image = ciimage
+                photoImageView.setNeedsDisplay()
             }
         default:
             assertionFailure("This target should not be called by a not registered button")

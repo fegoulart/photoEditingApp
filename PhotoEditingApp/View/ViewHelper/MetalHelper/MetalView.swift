@@ -28,11 +28,12 @@ class MetalView: MTKView {
         self.device = device
         self.framebufferOnly = false
         self.isPaused = true
-        self.enableSetNeedsDisplay = false
+        self.enableSetNeedsDisplay = true
         guard let device = device else { return }
         self.context = CIContext(mtlDevice: device)
         self.queue = device.makeCommandQueue()
         self.delegate = self
+        self.contentMode = .scaleAspectFit
     }
 
     required init(coder: NSCoder) {
@@ -67,8 +68,8 @@ extension MetalView: MTKViewDelegate {
                        commandBuffer: buffer,
                        bounds: bounds,
                        colorSpace: colorSpace)
+
         buffer?.present(drawable)
         buffer?.commit()
-        setNeedsDisplay()
     }
 }

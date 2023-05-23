@@ -10,6 +10,7 @@ extension PhotoEditingView {
         defer {
             currentCIImage = CIImage(image: image)
             photoImageView.image = currentCIImage
+            photoImageView.setNeedsDisplay()
         }
         let ratio = image.size.width / image.size.height
         let newHeight = photoImageView.frame.width / ratio

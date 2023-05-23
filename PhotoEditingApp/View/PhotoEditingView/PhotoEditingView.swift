@@ -18,6 +18,7 @@ final class PhotoEditingView: UIView {
             guard currentCIImage != nil else { return }
             self.currentFilter?.setValue(currentCIImage, forKey: kCIInputImageKey)
             self.photoImageView.image = currentCIImage
+            self.photoImageView.setNeedsDisplay()
         }
     }
     var outputCIImage: CIImage? {
