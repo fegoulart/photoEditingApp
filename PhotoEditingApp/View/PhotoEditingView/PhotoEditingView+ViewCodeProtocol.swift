@@ -12,6 +12,7 @@ extension PhotoEditingView: ViewCodeProtocol {
         addSubview(contrastSlider)
         addSubview(saturationSlider)
         addSubview(saveButton)
+        addSubview(filtersCollectionView)
     }
 
     func setupConstraints() {
@@ -96,6 +97,15 @@ extension PhotoEditingView: ViewCodeProtocol {
                 view.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -1 * defaultMargin),
                 view.heightAnchor.constraint(lessThanOrEqualTo: startButton.heightAnchor),
                 view.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: -1 * (defaultMargin + segmentHeight))
+            ]
+        }
+
+        filtersCollectionView.constraint { view in
+            [
+                view.topAnchor.constraint(equalTo: deleteButton.bottomAnchor, constant: defaultMargin),
+                view.trailingAnchor.constraint(equalTo: segmentControl.trailingAnchor, constant: 0),
+                view.leadingAnchor.constraint(equalTo: segmentControl.leadingAnchor, constant: 0),
+                view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -1 * defaultMargin)
             ]
         }
     }

@@ -1,4 +1,5 @@
 import UIKit
+import MetalKit
 import Combine
 
 final class ViewController: UIViewController {
@@ -8,12 +9,32 @@ final class ViewController: UIViewController {
     let viewModel: ViewModel
     private var cancellable: AnyCancellable?
     private var messageCancellable: AnyCancellable?
+    private var filterButtonCancellable: AnyCancellable?
     let stateChangeManager: StateChangeManager
+    lazy var dataSource = UICollectionViewDiffableDataSource<Int, PhotoEditingFilter>(
+        collectionView: photoEditingView.filtersCollectionView
+    ) { [weak photoEditingView] (collectionView, indexPath, item) -> UICollectionViewCell? in
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: FilterCell.cellId,
+            for: indexPath
+        ) as? FilterCell
+        cell?.configure(image: photoEditingView?.currentCIImage, with: item)
+        return cell
+    }
+
+    lazy var snapshot: NSDiffableDataSourceSnapshot<Int, PhotoEditingFilter> = {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, PhotoEditingFilter>()
+        snapshot.appendSections([0])
+        return snapshot
+    }()
+
 
     override func viewDidLoad() {
         self.view = photoEditingView
         super.viewDidLoad()
         checkImageCache()
+        setupCollectionView()
+        photoEditingView.filtersCollectionView.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -33,6 +54,7 @@ final class ViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         subscribeToImage()
         subscribeToOperationResult()
+        subscribeToFilterButton()
     }
 
     private func subscribeToImage() {
@@ -56,8 +78,30 @@ final class ViewController: UIViewController {
         }
     }
 
+    private func subscribeToFilterButton() {
+        filterButtonCancellable = photoEditingView.$filteredSelected.sink { [weak self] isSelected in
+            guard isSelected, let self = self else { return }
+            self.setupCollectionView()
+        }
+    }
+
+    private func cleanCollectionView() {
+        self.snapshot.deleteAllItems()
+        self.snapshot.appendSections([0])
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
+    }
+
     private func checkImageCache() {
         self.viewModel.retrieveImage()
+    }
+
+    private func setupCollectionView() {
+        self.cleanCollectionView()
+        photoEditingView.filtersCollectionView.dataSource = dataSource
+        PhotoEditingFilter.allCases.forEach { item in
+            snapshot.appendItems([item], toSection: 0)
+        }
+        self.dataSource.apply(self.snapshot, animatingDifferences: true)
     }
 }
 
@@ -103,5 +147,17 @@ extension ViewController {
                 self.stateChangeManager.signal()
             }
         }
+    }
+}
+
+extension ViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let filterName = PhotoEditingFilter.allCases[indexPath.row].rawValue
+        let filter = CIFilter(name: filterName)
+        filter?.setValue(self.photoEditingView.currentCIImage, forKey: kCIInputImageKey)
+        if let ciimage = filter?.outputImage {
+            photoEditingView.photoImageView.image = ciimage
+        }
+        photoEditingView.currentFilter = filter
     }
 }

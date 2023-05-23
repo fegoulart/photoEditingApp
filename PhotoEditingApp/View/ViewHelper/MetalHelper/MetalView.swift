@@ -11,7 +11,7 @@ class MetalView: MTKView {
     var image: CIImage? {
         didSet {
             guard image != nil else { return }
-            drawCIImge()
+            draw()
         }
     }
 
@@ -23,23 +23,28 @@ class MetalView: MTKView {
     init() {
         let device = MTLCreateSystemDefaultDevice()
         assert(device != nil, "Cannot define metal device")
-        super.init(frame: .zero, device: device)
+        super.init(frame:  CGRectMake(0, 0, 100, 100), device: device)
         self.isOpaque = false
         self.device = device
         self.framebufferOnly = false
         self.isPaused = true
-        self.enableSetNeedsDisplay = true
+        self.enableSetNeedsDisplay = false
         guard let device = device else { return }
         self.context = CIContext(mtlDevice: device)
         self.queue = device.makeCommandQueue()
-
+        self.delegate = self
     }
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
     }
+}
 
-    private func drawCIImge() {
+extension MetalView: MTKViewDelegate {
+    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {}
+
+    func draw(in view: MTKView) {
+        assert(Thread.isMainThread)
         guard let image = image else { return }
         guard let drawable = currentDrawable else {
             assertionFailure("CurrentDrawable should exist")

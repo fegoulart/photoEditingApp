@@ -4,6 +4,7 @@ extension PhotoEditingView {
 
     func showAdjusts() {
         DispatchQueue.main.async {
+            self.filtersCollectionView.fadeOut()
             self.adjustsStackView.fadeIn()
             if self.brightnessButton.isSelected {
                 self.brightnessSlider.fadeIn()
@@ -16,6 +17,10 @@ extension PhotoEditingView {
                     }
                 }
             }
+            self.filteredSelected = false
+            self.currentCIImage = self.photoImageView.image
+            self.currentFilter = CIFilter(name: "CIColorControls")
+            self.currentFilter?.setValue(self.currentCIImage, forKey: kCIInputImageKey)
         }
     }
     
@@ -25,6 +30,11 @@ extension PhotoEditingView {
             self.brightnessSlider.fadeOut()
             self.contrastSlider.fadeOut()
             self.saturationSlider.fadeOut()
+            self.filtersCollectionView.fadeIn {
+                self.layoutIfNeeded()
+                self.filteredSelected = true
+                self.currentCIImage = self.photoImageView.image
+            }
         }
     }
 
@@ -74,7 +84,7 @@ extension PhotoEditingView {
         if saveButton.isHidden { saveButton.fadeIn() }
         switch sender {
         case brightnessSlider:
-            guard let originalFilter = currentAdjustsFilter else {
+            guard let originalFilter = currentFilter else {
                 assertionFailure("Original filter should not be nil")
                 return
             }
@@ -84,7 +94,7 @@ extension PhotoEditingView {
                 photoImageView.image = ciimage
             }
         case contrastSlider:
-            guard let originalFilter = currentAdjustsFilter else {
+            guard let originalFilter = currentFilter else {
                 assertionFailure("Original filter should not be nil")
                 return
             }
@@ -94,7 +104,7 @@ extension PhotoEditingView {
                 photoImageView.image = ciimage
             }
         case saturationSlider:
-            guard let originalFilter = currentAdjustsFilter else {
+            guard let originalFilter = currentFilter else {
                 assertionFailure("Original filter should not be nil")
                 return
             }

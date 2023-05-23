@@ -6,6 +6,8 @@ import MetalKit
 final class PhotoEditingView: UIView {
 
     typealias ButtonHandler = () -> ()
+    @Published var filteredSelected: Bool = false
+
     var segmentHeight: CGFloat { 44 }
     var defaultMargin: CGFloat { 20 }
     var largeButtonSize: CGPoint { CGPoint(x: 100, y: 100) }
@@ -14,14 +16,16 @@ final class PhotoEditingView: UIView {
     var currentCIImage: CIImage? = nil {
         didSet {
             guard currentCIImage != nil else { return }
-            self.currentAdjustsFilter = CIFilter(name: "CIColorControls")
-            self.currentAdjustsFilter?.setValue(currentCIImage, forKey: kCIInputImageKey)
+            self.currentFilter?.setValue(currentCIImage, forKey: kCIInputImageKey)
+            self.photoImageView.image = currentCIImage
         }
     }
+    var outputCIImage: CIImage? {
+        currentFilter?.outputImage
+    }
 
-    var currentAdjustsFilter: CIFilter?
-    var currentFilterCIFilter: CIFilter?
-    
+    var currentFilter: CIFilter?
+
     var margins: UILayoutGuide {
         self.layoutMarginsGuide
     }
@@ -184,6 +188,15 @@ final class PhotoEditingView: UIView {
         slider.isHidden = true
         slider.addTarget(self, action: #selector(sliderValueDidChange), for: .valueChanged)
         return slider
+    }()
+
+    lazy var filtersCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+        collectionView.collectionViewLayout = makeCollectionViewLayout()
+        collectionView.register(FilterCell.self, forCellWithReuseIdentifier: FilterCell.cellId)
+        collectionView.backgroundColor = .black
+        collectionView.isHidden = true
+        return collectionView
     }()
 
     init(
