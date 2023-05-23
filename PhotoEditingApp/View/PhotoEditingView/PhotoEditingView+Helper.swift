@@ -59,5 +59,6 @@ extension PhotoEditingView {
         brightnessSlider.value = 0
         saturationSlider.value = 1
         contrastSlider.value = 1
+        filtersCollectionView.fadeOut()
     }
 }
