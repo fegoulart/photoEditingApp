@@ -2,7 +2,7 @@ import UIKit
 
 final class FilterCell: UICollectionViewCell {
 
-    static let cellId = "MyCustomCell"
+    static let cellId = "FilterCell"
 
     private var imageView: MetalView?
     var image: CIImage?
