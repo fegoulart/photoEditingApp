@@ -35,6 +35,7 @@ final class ViewController: UIViewController {
         checkImageCache()
         setupCollectionView()
         photoEditingView.filtersCollectionView.delegate = self
+        photoEditingView.filtersCollectionView.dataSource = dataSource
     }
 
     required init?(coder: NSCoder) {
@@ -81,7 +82,9 @@ final class ViewController: UIViewController {
     private func subscribeToFilterButton() {
         filterButtonCancellable = photoEditingView.$filteredSelected.sink { [weak self] isSelected in
             guard isSelected, let self = self else { return }
+            self.cleanCollectionView()
             self.setupCollectionView()
+            self.photoEditingView.filtersCollectionView.layoutIfNeeded()
         }
     }
 
@@ -96,8 +99,6 @@ final class ViewController: UIViewController {
     }
 
     private func setupCollectionView() {
-        self.cleanCollectionView()
-        photoEditingView.filtersCollectionView.dataSource = dataSource
         PhotoEditingFilter.allCases.forEach { item in
             snapshot.appendItems([item], toSection: 0)
         }
@@ -155,9 +156,11 @@ extension ViewController: UICollectionViewDelegate {
         let filterName = PhotoEditingFilter.allCases[indexPath.row].rawValue
         let filter = CIFilter(name: filterName)
         filter?.setValue(self.photoEditingView.currentCIImage, forKey: kCIInputImageKey)
+        photoEditingView.currentFilter = filter
         if let ciimage = filter?.outputImage {
             photoEditingView.photoImageView.image = ciimage
+            photoEditingView.photoImageView.setNeedsDisplay()
+            photoEditingView.saveButton.fadeIn()
         }
-        photoEditingView.currentFilter = filter
     }
 }

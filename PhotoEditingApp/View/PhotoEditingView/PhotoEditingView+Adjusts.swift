@@ -18,9 +18,8 @@ extension PhotoEditingView {
                 }
             }
             self.filteredSelected = false
-            self.currentCIImage = self.photoImageView.image
             self.currentFilter = CIFilter(name: "CIColorControls")
-            self.currentFilter?.setValue(self.currentCIImage, forKey: kCIInputImageKey)
+            self.currentCIImage = self.photoImageView.image
             self.photoImageView.setNeedsDisplay()
         }
     }
