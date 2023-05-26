@@ -1,6 +1,6 @@
 import Foundation
 
-final class ViewModel {
+final class ViewModel { // Readibility
 
     @Published private(set) var imageData: Data?
     @Published private(set) var operationResult: String = ""

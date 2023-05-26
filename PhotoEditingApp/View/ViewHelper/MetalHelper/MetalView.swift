@@ -5,7 +5,7 @@ import CoreImage
 
 class MetalView: MTKView {
 
-    var context: CIContext!
+    var context: CIContext! // should use optional
     var queue: MTLCommandQueue!
     let colorSpace = CGColorSpaceCreateDeviceRGB()
     var image: CIImage? {
@@ -23,7 +23,8 @@ class MetalView: MTKView {
     init() {
         let device = MTLCreateSystemDefaultDevice()
         assert(device != nil, "Cannot define metal device")
-        super.init(frame:  CGRectMake(0, 0, 100, 100), device: device)
+        super.init(frame: , device: device)
+        //super.init(frame:  CGRectMake(0, 0, 100, 100), device: device)
         self.isOpaque = false
         self.device = device
         self.framebufferOnly = false

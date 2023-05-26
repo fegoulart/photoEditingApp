@@ -19,7 +19,7 @@ final class PhotoEditingAppTests: XCTestCase {
         let startAction: PhotoEditingView.ButtonHandler = { [weak imagePicker] in
             imagePicker?.present()
         }
-
+ 
         let viewModel = ViewModel(cacheImageService: FileCacheImageService())
         trackForMemoryLeaks(viewModel, file: file, line: line)
         let deleteAction: PhotoEditingView.ButtonHandler = { [weak viewModel] in

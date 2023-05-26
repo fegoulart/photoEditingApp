@@ -1,7 +1,7 @@
 import Foundation
 
 final class FileCacheImageService: CacheImageService {
-
+    // Measure performance of Caching Process
     let name: String = "cachedImage.png"
 
     func cache(_ image: Data) throws {
@@ -22,7 +22,7 @@ final class FileCacheImageService: CacheImageService {
         return nil
     }
 
-    func delete() {
+    func delete() { // should throw
         if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
             try? FileManager.default.removeItem(at: dir.appendingPathComponent(name))
         }
