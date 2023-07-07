@@ -8,19 +8,45 @@ extension Target {
         name: "PhotoEditingApp",
         platform: .iOS,
         product: .app,
-        bundleId: "com.acme.photoEditingApp",
-        // sources: .paths(["PhotoEditingApp/**"]),
-        resources: [],
-        dependencies: []
+        productName: "PhotoEditingApp",
+        bundleId: "com.leapi.photoEditingApp",
+        deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
+        infoPlist: .file(path: "PhotoEditingApp/Config/Info.plist"),
+        sources: .paths(["PhotoEditingApp/**"]),
+        resources: ["PhotoEditingApp/Resources/**"],
+        copyFiles: nil,
+        headers: nil,
+        entitlements: nil,
+        scripts: [],
+        dependencies: [],
+        settings: .mainTargetSettings,
+        coreDataModels: [],
+        environment: [:],
+        launchArguments: [],
+        additionalFiles: [],
+        buildRules: []
     )
 
-//    public static let unitTestTarget = Self.init(
-//        name: <#T##String#>,
-//        platform: <#T##Platform#>,
-//        product: <#T##Product#>,
-//        bundleId: <#T##String#>,
-//        sources:,
-//        resources: [],
-//        dependencies: []
-//    )
+    public static let testTarget = Self.init(
+        name: "PhotoEditingAppTests",
+        platform: .iOS,
+        product: .unitTests,
+        productName: "PhotoEditingAppTests",
+        bundleId: "com.leapi.photoEditingAppTests",
+        deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
+        infoPlist: .file(path: "PhotoEditingAppTests/Config/Info.plist"),
+        sources: .paths(["PhotoEditingAppTests/**"]),
+        resources: [],
+        copyFiles: nil,
+        headers: nil,
+        entitlements: nil,
+        scripts: [],
+        dependencies: [.target(name: "PhotoEditingApp")],
+        settings: .testTargetSettings,
+        coreDataModels: [],
+        environment: [:],
+        launchArguments: [],
+        additionalFiles: [],
+        buildRules: []
+    )
 }

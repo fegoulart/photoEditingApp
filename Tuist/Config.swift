@@ -1,11 +1,13 @@
 import ProjectDescription
 
 let config = Config(
-    compatibleXcodeVersions: ["14.3.1"],
-    swiftVersion: "5.4.0",
+    compatibleXcodeVersions: .upToNextMinor("14.3"),
+    cloud: nil,
+    cache: nil,
+    swiftVersion: "5.8.0",
+    plugins: [],
     generationOptions: .options(
-        xcodeProjectName: "SomePrefix-\(.projectName)-SomeSuffix",
-        organizationName: "Tuist",
-        developmentRegion: "pt"
+        resolveDependenciesWithSystemScm: false,
+        disablePackageVersionLocking: false
     )
 )
