@@ -59,7 +59,7 @@ extension Scheme {
             simulatedLocation: nil,
             enableGPUFrameCaptureMode: RunActionOptions.GPUFrameCaptureMode.default
         ),
-        diagnosticsOptions: [.mainThreadChecker]
+        diagnosticsOptions: [.mainThreadChecker, .performanceAntipatternChecker]
     )
 
     static let mainArchiveAction: ArchiveAction = .archiveAction(
