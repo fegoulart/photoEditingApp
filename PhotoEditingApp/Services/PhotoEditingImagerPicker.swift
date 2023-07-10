@@ -4,7 +4,7 @@ final class PhotoEditingImagePicker: NSObject, ImagePicker {
     weak var delegate: ImagePickerDelegate?
 
     let pickerController: UIImagePickerController
-    let pickerViewModel: ImagePickerViewModel 
+    let pickerViewModel: ImagePickerViewModel
     weak var presentationController: UIViewController?
 
     init(
@@ -69,7 +69,7 @@ final class PhotoEditingImagePicker: NSObject, ImagePicker {
         )
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Allow Photos & Camera", style: .cancel, handler: { (alert) -> Void in
+        alert.addAction(UIAlertAction(title: "Allow Photos & Camera", style: .cancel, handler: { (_) -> Void in
             UIApplication.shared.open(settingsAppURL, options: [:], completionHandler: nil)
         }))
 

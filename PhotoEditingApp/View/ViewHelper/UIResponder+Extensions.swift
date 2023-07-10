@@ -7,8 +7,9 @@ extension UIResponder {
         } else {
             if self.next != nil {
                 return (self.next!).getParentViewController()
+            } else {
+                return nil
             }
-            else {return nil}
         }
     }
 }

@@ -282,6 +282,7 @@
 				6C10E19A2A1525B700A6E090 /* Sources */,
 				6C10E19B2A1525B700A6E090 /* Frameworks */,
 				6C10E19C2A1525B700A6E090 /* Resources */,
+				19B5094A2A5C2D7300E548AE /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -366,6 +367,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		19B5094A2A5C2D7300E548AE /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n    swiftlint\nelse\n    echo \"warning: Swiftlint not installed, download from https://github.com/real/Swiftlint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6C10E19A2A1525B700A6E090 /* Sources */ = {

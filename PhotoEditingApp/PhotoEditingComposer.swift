@@ -4,7 +4,10 @@ struct PhotoEditingComposer {
     static func makeViewController() -> ViewController {
         let permissionChecker = PhotoEditingAppPermissionChecker()
         let imagePickerViewModel = ImagePickerViewModel(permissionChecker: permissionChecker)
-        let imagePicker = PhotoEditingImagePicker(pickerController: UIImagePickerController(), pickerViewModel: imagePickerViewModel)
+        let imagePicker = PhotoEditingImagePicker(
+            pickerController: UIImagePickerController(),
+            pickerViewModel: imagePickerViewModel
+        )
         let startAction: PhotoEditingView.ButtonHandler = { [weak imagePicker] in
             imagePicker?.present()
         }
@@ -26,10 +29,19 @@ struct PhotoEditingComposer {
                 }
             }
         }
-        let photoEditingView = PhotoEditingView(startAction: startAction, deleteAction: deleteAction, saveAction: saveAction)
+        let photoEditingView = PhotoEditingView(
+            startAction: startAction,
+            deleteAction: deleteAction,
+            saveAction: saveAction
+        )
 
         photoEditingView.startAction = startAction
-        let viewController = ViewController(view: photoEditingView, imagePicker: imagePicker, viewModel: viewModel, stateChangeManager: ViewStateChangeManager())
+        let viewController = ViewController(
+            view: photoEditingView,
+            imagePicker: imagePicker,
+            viewModel: viewModel,
+            stateChangeManager: ViewStateChangeManager()
+        )
         imagePicker.delegate = viewController
         imagePicker.presentationController = viewController
         return viewController

@@ -15,6 +15,7 @@ extension PhotoEditingView: ViewCodeProtocol {
         addSubview(filtersCollectionView)
     }
 
+    // swiftlint:disable:next function_body_length
     func setupConstraints() {
 
         segmentControl.constraint { view in
@@ -22,7 +23,7 @@ extension PhotoEditingView: ViewCodeProtocol {
                 view.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: defaultMargin),
                 view.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -1 * defaultMargin),
                 view.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -2 * defaultMargin),
-                view.heightAnchor.constraint(equalToConstant: segmentHeight),
+                view.heightAnchor.constraint(equalToConstant: segmentHeight)
             ]
         }
 
@@ -97,7 +98,11 @@ extension PhotoEditingView: ViewCodeProtocol {
                 view.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -1 * defaultMargin),
                 view.heightAnchor.constraint(lessThanOrEqualTo: startButton.heightAnchor),
                 view.heightAnchor.constraint(greaterThanOrEqualToConstant: 30),
-                view.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: -1 * (defaultMargin + segmentHeight))
+                view.centerYAnchor.constraint(
+                    equalTo: margins.centerYAnchor, constant: -1 * (
+                        defaultMargin + segmentHeight
+                    )
+                )
             ]
         }
 
@@ -119,7 +124,11 @@ extension PhotoEditingView: ViewCodeProtocol {
                 view.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: defaultMargin),
                 view.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -1 * defaultMargin),
                 view.heightAnchor.constraint(equalToConstant: newHeight),
-                view.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: -1 * (defaultMargin + segmentHeight))
+                view.centerYAnchor.constraint(
+                    equalTo: margins.centerYAnchor, constant: -1 * (
+                        defaultMargin + segmentHeight
+                    )
+                )
             ]
         }
         self.layoutIfNeeded()
@@ -133,13 +142,20 @@ extension PhotoEditingView: ViewCodeProtocol {
 #if DEBUG
 import SwiftUI
 
-struct PhotoEditingView_Preview: PreviewProvider {
+struct PhotoEditingViewPreview: PreviewProvider {
     static var previews: some View {
-        PhotoEditingView(startAction: { }, deleteAction: {}, saveAction: {_ in } ).showPreview().previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max")).previewDisplayName("iPhone 14 Pro Max")
+        PhotoEditingView(
+            startAction: { },
+            deleteAction: {},
+            saveAction: { _ in }
+        ).showPreview().previewDevice(
+            PreviewDevice(rawValue: "iPhone 14 Pro Max")).previewDisplayName("iPhone 14 Pro Max")
 
-
-        PhotoEditingView(startAction: { }, deleteAction: {}, saveAction: {_ in } ).showPreview().previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)")).previewDisplayName("iPhone SE (3rd generation)")
-
+        PhotoEditingView(
+            startAction: { }, deleteAction: {}, saveAction: { _ in }
+        ).showPreview().previewDevice(
+            PreviewDevice(
+                rawValue: "iPhone SE (3rd generation)")).previewDisplayName("iPhone SE (3rd generation)")
     }
 }
 #endif
