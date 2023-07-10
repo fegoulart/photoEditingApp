@@ -17,7 +17,7 @@ extension Target {
         copyFiles: nil,
         headers: nil,
         entitlements: nil,
-        scripts: [],
+        scripts: [ TargetScript.swiftLint ],
         dependencies: [],
         settings: .mainTargetSettings,
         coreDataModels: [],

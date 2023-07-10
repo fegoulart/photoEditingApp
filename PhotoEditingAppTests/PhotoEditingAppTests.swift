@@ -14,7 +14,10 @@ final class PhotoEditingAppTests: XCTestCase {
 
         let imagePickerViewModel = ImagePickerViewModel(permissionChecker: permissionChecker)
         trackForMemoryLeaks(imagePickerViewModel, file: file, line: line)
-        let imagePicker = PhotoEditingImagePicker(pickerController: UIImagePickerController(), pickerViewModel: imagePickerViewModel)
+        let imagePicker = PhotoEditingImagePicker(
+            pickerController: UIImagePickerController(),
+            pickerViewModel: imagePickerViewModel
+        )
         trackForMemoryLeaks(imagePicker, file: file, line: line)
         let startAction: PhotoEditingView.ButtonHandler = { [weak imagePicker] in
             imagePicker?.present()
@@ -38,11 +41,18 @@ final class PhotoEditingAppTests: XCTestCase {
             }
         }
         trackForMemoryLeaks(imageSaver, file: file, line: line)
-        let photoEditingView = PhotoEditingView(startAction: startAction, deleteAction: deleteAction, saveAction: saveAction)
+        let photoEditingView = PhotoEditingView(
+            startAction: startAction, deleteAction: deleteAction, saveAction: saveAction
+        )
 
         photoEditingView.startAction = startAction
         trackForMemoryLeaks(photoEditingView, file: file, line: line)
-        let viewController = ViewController(view: photoEditingView, imagePicker: imagePicker, viewModel: viewModel, stateChangeManager: ViewStateChangeManager())
+        let viewController = ViewController(
+            view: photoEditingView,
+            imagePicker: imagePicker,
+            viewModel: viewModel,
+            stateChangeManager: ViewStateChangeManager()
+        )
         imagePicker.delegate = viewController
         imagePicker.presentationController = viewController
         trackForMemoryLeaks(viewController, file: file, line: line)

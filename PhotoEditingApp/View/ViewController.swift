@@ -28,7 +28,6 @@ final class ViewController: UIViewController {
         return snapshot
     }()
 
-
     override func viewDidLoad() {
         self.view = photoEditingView
         super.viewDidLoad()
@@ -63,7 +62,7 @@ final class ViewController: UIViewController {
         cancellable = viewModel.$imageData.dropFirst(1).sink { [weak self] imageData in
             guard let imageData: Data = imageData else { self?.setEmptyState(); return }
             assert(!Thread.isMainThread)
-            if let image = UIImage(data: imageData){
+            if let image = UIImage(data: imageData) {
                 self?.setEditingState(with: image)
             }
         }
@@ -72,7 +71,11 @@ final class ViewController: UIViewController {
     private func subscribeToOperationResult() {
         messageCancellable = viewModel.$operationResult.dropFirst().sink { [weak self] resultString in
             guard !resultString.isEmpty else { return }
-            let alertController = UIAlertController(title: "Operation status", message: resultString, preferredStyle: .alert)
+            let alertController = UIAlertController(
+                title: "Operation status",
+                message: resultString,
+                preferredStyle: .alert
+            )
             let actionOk = UIAlertAction(title: "Ok", style: .default) { _ in }
             alertController.addAction(actionOk)
             self?.present(alertController, animated: true)

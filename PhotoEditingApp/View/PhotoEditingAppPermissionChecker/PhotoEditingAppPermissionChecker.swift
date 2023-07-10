@@ -22,7 +22,7 @@ struct PhotoEditingAppPermissionChecker: PermissionChecker {
                 break
             }
             guard status == .authorized else {
-                    PHPhotoLibrary.requestAuthorization() { status in
+                    PHPhotoLibrary.requestAuthorization { status in
                         if status == .authorized {
                             completion(true)
                         } else {

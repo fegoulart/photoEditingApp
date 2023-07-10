@@ -2,10 +2,7 @@ import UIKit
 
 extension PhotoEditingView {
     func makeCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-        let layout =  UICollectionViewCompositionalLayout { (
-            sectionIndex: Int,
-            layoutEnv: NSCollectionLayoutEnvironment
-        ) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
 
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                   heightDimension: .fractionalHeight(1))

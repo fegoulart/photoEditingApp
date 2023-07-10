@@ -11,6 +11,7 @@ extension UIView {
     }
 #if DEBUG
     private struct Preview: UIViewRepresentable {
+        // swiftlint:disable:next nesting
         typealias UIViewType = UIView
         let view: UIView
         func makeUIView(context: Context) -> UIView {
@@ -33,7 +34,7 @@ extension UIView {
         UIView.animate(
             withDuration: duration,
             animations: { self.alpha = 1 },
-            completion: { (value: Bool) in
+            completion: { _ in
                 if let complete = onCompletion { complete() }
             }
         )
@@ -44,7 +45,7 @@ extension UIView {
         UIView.animate(
             withDuration: duration,
             animations: { self.alpha = 0 },
-            completion: { (value: Bool) in
+            completion: { _ in
                 self.isHidden = true
                 if let complete = onCompletion { complete() }
             }

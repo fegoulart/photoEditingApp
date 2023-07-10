@@ -149,5 +149,3 @@ extension Settings {
 
     static let releaseTestTargetSettingsDict: SettingsDictionary = [:]
 }
-
-

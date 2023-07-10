@@ -23,7 +23,7 @@ class MetalView: MTKView {
     init() {
         let device = MTLCreateSystemDefaultDevice()
         assert(device != nil, "Cannot define metal device")
-        super.init(frame:  CGRectMake(0, 0, 100, 100), device: device)
+        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100), device: device)
         self.isOpaque = false
         self.device = device
         self.framebufferOnly = false

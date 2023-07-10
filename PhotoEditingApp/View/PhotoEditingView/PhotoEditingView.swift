@@ -5,7 +5,7 @@ import MetalKit
 
 final class PhotoEditingView: UIView {
 
-    typealias ButtonHandler = () -> ()
+    typealias ButtonHandler = () -> Void
     @Published var filteredSelected: Bool = false
 
     var segmentHeight: CGFloat { 44 }
@@ -13,7 +13,7 @@ final class PhotoEditingView: UIView {
     var largeButtonSize: CGPoint { CGPoint(x: 100, y: 100) }
     var defaultButtonSize: CGPoint { CGPoint(x: 44, y: 44) }
     var iphoneSE22Width: CGFloat { 375 }
-    var currentCIImage: CIImage? = nil {
+    var currentCIImage: CIImage? {
         didSet {
             guard currentCIImage != nil else { return }
             self.currentFilter?.setValue(currentCIImage, forKey: kCIInputImageKey)
@@ -43,7 +43,7 @@ final class PhotoEditingView: UIView {
 
     var startAction: ButtonHandler?
     private(set) var deleteAction: ButtonHandler?
-    private(set) var saveAction: (() -> ())?
+    private(set) var saveAction: (() -> Void)?
 
     lazy var segmentControl: UISegmentedControl = {
         let segment = UISegmentedControl()
@@ -65,7 +65,12 @@ final class PhotoEditingView: UIView {
     }
 
     lazy var startButton: UIButton = {
-        let image = UIImage(systemName: "plus.circle", withConfiguration:  UIImage.SymbolConfiguration(pointSize: self.largeButtonSize.y))
+        let image = UIImage(
+            systemName: "plus.circle",
+            withConfiguration: UIImage.SymbolConfiguration(
+                pointSize: self.largeButtonSize.y
+            )
+        )
         let button = UIButton()
         button.setBackgroundImage(image, for: .normal)
         button.layoutIfNeeded()
@@ -85,7 +90,9 @@ final class PhotoEditingView: UIView {
     }()
 
     lazy var deleteButton: UIButton = {
-        let image = UIImage(systemName: "trash.circle", withConfiguration:  UIImage.SymbolConfiguration(pointSize: self.defaultButtonSize.y))
+        let image = UIImage(
+            systemName: "trash.circle",
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: self.defaultButtonSize.y))
         let button = UIButton()
         button.setBackgroundImage(image, for: .normal)
         button.layoutIfNeeded()
@@ -96,7 +103,10 @@ final class PhotoEditingView: UIView {
     }()
 
     lazy var saveButton: UIButton = {
-        let image = UIImage(systemName: "folder.circle", withConfiguration:  UIImage.SymbolConfiguration(pointSize: self.defaultButtonSize.y))
+        let image = UIImage(
+            systemName: "folder.circle",
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: self.defaultButtonSize.y)
+        )
         let button = UIButton()
         button.setBackgroundImage(image, for: .normal)
         button.layoutIfNeeded()
@@ -113,7 +123,13 @@ final class PhotoEditingView: UIView {
     lazy var brightnessButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: defaultButtonSize.x, height: defaultButtonSize.y)
-        button.setBackgroundImage(brightnessIcon.withTintColor(.lightGray, renderingMode: .alwaysOriginal), for: .normal)
+        button.setBackgroundImage(
+            brightnessIcon.withTintColor(
+                .lightGray,
+                renderingMode: .alwaysOriginal
+            ),
+            for: .normal
+        )
         button.setBackgroundImage(brightnessIcon.withTintColor(.black, renderingMode: .alwaysOriginal), for: .selected)
         button.layoutIfNeeded()
         button.subviews.first?.contentMode = .scaleAspectFit
@@ -128,7 +144,12 @@ final class PhotoEditingView: UIView {
     lazy var saturationButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(x: 0, y: 0, width: defaultButtonSize.x, height: defaultButtonSize.y)
-        button.setBackgroundImage(saturationIcon.withTintColor(.lightGray, renderingMode: .alwaysOriginal), for: .normal)
+        button.setBackgroundImage(
+            saturationIcon.withTintColor(
+                .lightGray,
+                renderingMode: .alwaysOriginal
+            ), for: .normal
+        )
         button.setBackgroundImage(saturationIcon.withTintColor(.black, renderingMode: .alwaysOriginal), for: .selected)
         button.layoutIfNeeded()
         button.subviews.first?.contentMode = .scaleAspectFit
@@ -152,7 +173,14 @@ final class PhotoEditingView: UIView {
     }()
 
     lazy var contrastSlider: UISlider = {
-        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: margins.layoutFrame.width - 2 * defaultMargin, height: defaultButtonSize.y))
+        let slider = UISlider(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: margins.layoutFrame.width - 2 * defaultMargin,
+                height: defaultButtonSize.y
+            )
+        )
         slider.minimumValue = 0.25
         slider.maximumValue = 4
         slider.value = 1
@@ -172,7 +200,14 @@ final class PhotoEditingView: UIView {
     }()
 
     lazy var brightnessSlider: UISlider = {
-        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: margins.layoutFrame.width - 2 * defaultMargin, height: defaultButtonSize.y))
+        let slider = UISlider(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: margins.layoutFrame.width - 2 * defaultMargin,
+                height: defaultButtonSize.y
+            )
+        )
         slider.minimumValue = -1
         slider.maximumValue = 1
         slider.value = 0
@@ -183,7 +218,14 @@ final class PhotoEditingView: UIView {
     }()
 
     lazy var saturationSlider: UISlider = {
-        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: margins.layoutFrame.width - 2 * defaultMargin, height: defaultButtonSize.y))
+        let slider = UISlider(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: margins.layoutFrame.width - 2 * defaultMargin,
+                height: defaultButtonSize.y
+            )
+        )
         slider.minimumValue = 0
         slider.maximumValue = 2
         slider.value = 1
@@ -205,7 +247,7 @@ final class PhotoEditingView: UIView {
     init(
         startAction: @escaping ButtonHandler,
         deleteAction: @escaping ButtonHandler,
-        saveAction: @escaping (UIImage?)->()
+        saveAction: @escaping (UIImage?) -> Void
     ) {
         self.startAction = startAction
         super.init(frame: CGRect.zero)

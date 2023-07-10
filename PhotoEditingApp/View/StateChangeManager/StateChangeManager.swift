@@ -1,5 +1,5 @@
 protocol StateChangeManager {
-    typealias ClientBlock = ()->()
+    typealias ClientBlock = () -> Void
     func setNewState(completion: @escaping ClientBlock)
     func signal()
 }

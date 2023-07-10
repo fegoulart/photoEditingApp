@@ -23,7 +23,7 @@ extension PhotoEditingView {
             self.photoImageView.setNeedsDisplay()
         }
     }
-    
+
     func showFilters() {
         DispatchQueue.main.async {
             self.adjustsStackView.fadeOut()
@@ -77,10 +77,12 @@ extension PhotoEditingView {
             }
         default:
             assertionFailure("This target should not be called by a not registered button")
+            // swiftlint:disable:next unneeded_break_in_switch
             break
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     @objc func sliderValueDidChange(_ sender: UISlider) {
         if saveButton.isHidden { saveButton.fadeIn() }
         switch sender {
@@ -119,6 +121,7 @@ extension PhotoEditingView {
             }
         default:
             assertionFailure("This target should not be called by a not registered button")
+            // swiftlint:disable:next unneeded_break_in_switch
             break
         }
     }

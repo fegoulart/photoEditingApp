@@ -8,7 +8,7 @@ final class ImagePickerViewModel {
         self.permissionChecker = permissionChecker
     }
 
-    func checkPermission(for permission: AppPermissions, completion: @escaping (Bool)->()) {
+    func checkPermission(for permission: AppPermissions, completion: @escaping (Bool) -> Void) {
         permissionChecker.checkFor(permission, completion: completion)
     }
 }

@@ -44,5 +44,3 @@ final class FilterCell: UICollectionViewCell {
         imageView.removeFromSuperview()
     }
 }
-
-
