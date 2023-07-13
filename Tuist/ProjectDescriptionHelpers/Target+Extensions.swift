@@ -18,7 +18,7 @@ extension Target {
         headers: nil,
         entitlements: nil,
         scripts: [ TargetScript.swiftLint ],
-        dependencies: [],
+        dependencies: [.external(name: "Alamofire")],
         settings: .mainTargetSettings,
         coreDataModels: [],
         environment: [:],
